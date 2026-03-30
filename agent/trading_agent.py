@@ -5,6 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -29,6 +30,7 @@ llm_with_structured_output = llm.with_structured_output(TradingDecision, method=
 class AgentState(TypedDict):
     df: pd.DataFrame                    # Input price data
     symbol: str
+    data_summary: str  | None
     decision: TradingDecision | None    # Final structured output
     raw_response: str | None            # For debugging
     max_iterations: Annotated[int, lambda x, y: x + y]   # Optional iteration counter
@@ -66,24 +68,34 @@ Average Volume: {avg_volume:,}
     state["data_summary"] = f"{summary}\n\nLast 25 candles:\n{recent_data}"
     return state
 
+
+
 def analyze_node(state: AgentState) -> AgentState:
-    """Main agent node — calls the LLM with system prompt + data."""
-    with open("agent/prompts/trading_system_prompt.md", "r") as f:
+    """Call the trading agent with system prompt using correct path."""
+    prompt_path = Path(__file__).parent / "prompts" / "trading_system_prompt.md"
+    
+    if not prompt_path.exists():
+        raise FileNotFoundError(f"System prompt not found at: {prompt_path}")
+
+    with open(prompt_path, "r", encoding="utf-8") as f:
         system_prompt = f.read()
 
-    prompt = ChatPromptTemplate.from_messages([
+    prompt_template = ChatPromptTemplate.from_messages([
         ("system", system_prompt),
-        ("user", "Here is the 5-minute price data:\n\n{data_summary}\n\nAnalyze and give your trading decision.")
+        ("user", "Here is the 5-minute OHLCV data for analysis:\n\n{data_summary}\n\nProvide your trading decision now.")
     ])
 
-    chain = prompt | llm_with_structured_output
+    # /home/Kiran/work/Langgraph_Project/Summary
 
-    response: TradingDecision = chain.invoke({
-        "data_summary": state["data_summary"]
-    })
+    with open(f'/home/Kiran/work/Langgraph_Project/Summary/summary_{state["symbol"]}.txt', 'w') as f:
+        f.write(state["data_summary"])
+
+    chain = prompt_template | llm_with_structured_output
+
+    response: TradingDecision = chain.invoke({"data_summary": state["data_summary"]})
 
     state["decision"] = response
-    state["raw_response"] = str(response)  # for debugging
+    state["raw_response"] = str(response)
     return state
 
 

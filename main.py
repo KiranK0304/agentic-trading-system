@@ -2,7 +2,12 @@
 from agent.trading_agent import run_trading_agent
 from data_loader import fetch_data
 
-symbol = "SBIN.NS"
+# symbol = "SBIN.NS"
+
+print("Enter the stock symbol\
+    eg: SBIN.NS, TCS.NS, LT.NS")
+
+symbol = input("Enter:  ")
 
 df = fetch_data(symbol, period="max")
 
