@@ -42,13 +42,12 @@ def prepare_data_node(state: AgentState) -> AgentState:
     if len(df) < 10:
         raise ValueError(f"Not enough data. Got only {len(df)} rows.")
 
-    # Safe scalar extraction (fixes FutureWarning + KeyError)
-    latest_close = float(df['Close'].iloc[-1])
-    latest_high  = float(df['High'].iloc[-1])
-    latest_low   = float(df['Low'].iloc[-1])
-    avg_volume   = int(df['Volume'].mean())
+    # Safe scalar extraction (recommended way)
+    latest_close = df['Close'].iloc[-1].item()
+    latest_high  = df['High'].iloc[-1].item()
+    latest_low   = df['Low'].iloc[-1].item()
+    avg_volume   = int(df['Volume'].mean().item())
 
-    # Use .iloc safely for Datetime_IST
     start_time = df['Datetime_IST'].iloc[0]
     end_time   = df['Datetime_IST'].iloc[-1]
 
