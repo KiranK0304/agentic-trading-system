@@ -1,16 +1,14 @@
 import pandas as pd
-from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, START, END
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
-from pydantic import BaseModel
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from .schemas import AgentState, TradingDecision
 
 load_dotenv()
 
-from .schemas import TradingDecision
 
 if os.environ["GROQ_API_KEY"]:  
     print("yes!")
@@ -25,15 +23,6 @@ llm = ChatOpenAI(
 )
 
 llm_with_structured_output = llm.with_structured_output(TradingDecision, method="function_calling")
-
-# ====================== STATE ======================
-class AgentState(TypedDict):
-    df: pd.DataFrame                    # Input price data
-    symbol: str
-    data_summary: str  | None
-    decision: TradingDecision | None    # Final structured output
-    raw_response: str | None            # For debugging
-    max_iterations: Annotated[int, lambda x, y: x + y]   # Optional iteration counter
 
 
 # ====================== NODES ======================

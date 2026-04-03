@@ -1,11 +1,16 @@
 from pydantic import BaseModel, Field
 from typing import Literal
 
+from typing import TypedDict, Annotated
+import pandas as pd
+
+
+
 class TradingDecision(BaseModel):
     """Structured output from the trading agent."""
-    decision: Literal["BUY", "SELL", "HOLD"] = Field(
+    decision: Literal["BUY", "SELL"] = Field(
         ..., 
-        description="Final trading decision: BUY, SELL, or HOLD"
+        description="Final trading decision: BUY, SELL"
     )
     confidence: int = Field(
         ..., 
@@ -25,3 +30,12 @@ class TradingDecision(BaseModel):
         ..., 
         description="Key risks, stop-loss suggestion, or important caveats"
     )
+
+
+class AgentState(TypedDict):
+    df: pd.DataFrame
+    symbol: str
+    data_summary: str | None
+    decision: TradingDecision | None
+    raw_response: str | None
+    max_iterations: Annotated[int, lambda x, y: x + y]
