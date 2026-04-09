@@ -71,7 +71,7 @@ class AgentSchema(BaseModel):
 # Each node reads what it needs and writes its output back.
 
 class GraphState(TypedDict):
-    df: pd.DataFrame
+    df: Annotated[pd.DataFrame, "allow_multiple"]
     symbol: str
     data_summary: str | None
     decision: AgentSchema | None

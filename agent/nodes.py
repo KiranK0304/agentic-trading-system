@@ -138,14 +138,6 @@ def make_fundamental_node(
 
         state["fundamental_analysis"] = result
 
-        print(""" 
-        this node used data summary and called get macro function
-        that function returns something like derived some embedded type thing
-        then use summary and macro context to invoke the chain and 
-        that will produce something
-        found build_structured_llm but didnt see anywhere used
-        finally this node will fill fundamental_analysis field""")
-
         return state
 
     return fundamental_node
