@@ -72,10 +72,15 @@ def build_trading_graph():
 
     graph_builder.add_edge(START,             "prepare")
     graph_builder.add_edge("prepare",        "market_context")
+
     graph_builder.add_edge("market_context", "fundamental")
-    graph_builder.add_edge("fundamental",    "technical")
+    graph_builder.add_edge("market_context",    "technical")
+
     graph_builder.add_edge("technical",      "orchestrator")
-    graph_builder.add_edge("orchestrator",   END)
+    graph_builder.add_edge("fundamental",   "orchestrator")
+
+    graph_builder.add_edge("orchestrator", END)
+
 
     return graph_builder.compile()
 
