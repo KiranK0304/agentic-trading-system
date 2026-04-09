@@ -1,0 +1,37 @@
+{
+  "fetched_at_utc": "2026-04-09T13:03:02.443621+00:00",
+  "indices": [
+    {
+      "name": "DAX",
+      "price": 44.44,
+      "change": 1.83,
+      "percent_change": 4.2948
+    },
+    {
+      "name": "CAC 40",
+      "price": 50.31,
+      "change": 1.24,
+      "percent_change": 2.527
+    }
+  ],
+  "headlines": [
+    "Jim Cramer's top 10 things to watch in the stock market Thursday",
+    "Spain ramps up criticism of Israel, US, defying Trump threats",
+    "Iran's president says Israeli strikes on Lebanon render negotiations meaningless",
+    "India grants waivers for some ships to deliver Iran cargoes, sources say",
+    "Shipping traffic through Hormuz at virtual standstill despite ceasefire, data shows",
+    "As millions lose weight on GLP-1s, they're starting to turn to retailers to refresh their wardrobes",
+    "Strait of Hormuz is shut, must reopen without conditions, UAE oil giant ADNOC's CEO says",
+    "Olympic skier Lindsey Vonn doesn't rule out the 2030 games: 'I would only do it if I could be fast'",
+    "Exclusive: Iran war doubles Russia's main oil revenue to $9 bln in April, Reuters calculations show",
+    "US-Iran truce should extend to Lebanon, EU's top diplomat says"
+  ],
+  "fear_greed": {
+    "value": "14",
+    "classification": "Extreme Fear"
+  },
+  "derived": {
+    "breadth": "indices_up=2, indices_down=0, indices_no_data=9",
+    "llm_context": "### Global market context\nIndices (available):\n  DAX: 44.44 \u25b24.2948%\n  CAC 40: 50.31 \u25b22.527%\nFear & Greed: 14/100 \u2014 Extreme Fear\nHeadlines:\n  - Jim Cramer's top 10 things to watch in the stock market Thursday\n  - Spain ramps up criticism of Israel, US, defying Trump threats\n  - Iran's president says Israeli strikes on Lebanon render negotiations meaningless\n  - India grants waivers for some ships to deliver Iran cargoes, sources say\n  - Shipping traffic through Hormuz at virtual standstill despite ceasefire, data shows"
+  }
+}

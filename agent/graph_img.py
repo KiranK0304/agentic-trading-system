@@ -1,74 +1,30 @@
-# import sys
-# import os
-# from pathlib import Path
-
-# # Add parent directory to Python path so imports work cleanly
-# sys.path.insert(0, str(Path(__file__).parent.parent))
-
-# from agent.trading_agent import create_trading_agent
-# from agent.trading_agent import run_trading_agent   # optional, for testing
-# from data_loader import fetch_data                  # adjust path if needed
-
-# # ====================== CREATE & VISUALIZE GRAPH ======================
-# print("Creating trading agent graph...")
-
-# graph = create_trading_agent()
-
-# # Generate Mermaid diagram as PNG and display/save it
-# try:
-#     img_data = graph.get_graph().draw_mermaid_png()
-    
-#     # Save the image to file (recommended)
-#     output_path = Path("trading_agent_graph.png")
-#     output_path.write_bytes(img_data)
-    
-#     print(f"✅ Graph image saved as: {output_path.resolve()}")
-#     print("You can open 'trading_agent_graph.png' to see the agent workflow.")
-
-#     # Optional: Try to display if running in Jupyter/IPython
-#     try:
-#         from IPython.display import Image, display
-#         display(Image(img_data))
-#         print("Displayed in notebook/Jupyter.")
-#     except ImportError:
-#         print("IPython not available. Image saved to file instead.")
-
-# except Exception as e:
-#     print(f"❌ Failed to generate graph image: {e}")
-#     print("Make sure Graphviz is installed on your system:")
-#     print("   sudo apt install graphviz")
-
-# # ====================== OPTIONAL: Test the agent ======================
-# if __name__ == "__main__":
-#     print("\n" + "="*60)
-#     print("Testing the full agent with real data...")
-    
-#     df = fetch_data("SBIN.NS", period="30d", interval="5m")
-    
-#     if not df.empty:
-#         decision = run_trading_agent(df, symbol="SBIN.NS")
-#         print(f"\nFinal Decision: {decision.decision} (Confidence: {decision.confidence}%)")
+from pathlib import Path
+import sys
 
 
+# Ensure project-root imports work when running this file directly.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from agent.trading_agent import build_trading_graph
 
 
+def save_compiled_graph_image() -> Path:
+    """
+    Build (compile) the trading graph and save its rendered PNG
+    into the project root folder.
+    """
+    compiled_graph = build_trading_graph()
+    png_data = compiled_graph.get_graph().draw_mermaid_png()
 
-from trading_agent import build_trading_graph
-from IPython.display import Image
-
-graph = build_trading_graph()
-
-# Image(graph.get_graph().draw_mermaid_png())
+    output_path = PROJECT_ROOT / "trading_compiled_graph.png"
+    output_path.write_bytes(png_data)
+    return output_path
 
 
-
-
-
-# 1. Generate the image data (this returns a bytes object)
-png_data = graph.get_graph().draw_mermaid_png()
-
-# 2. Open a new file in 'wb' (write binary) mode and save the data
-with open("trading_workflow.png", "wb") as file:
-    file.write(png_data)
-
-print("Image saved successfully as trading_workflow.png")
+if __name__ == "__main__":
+    try:
+        saved_file = save_compiled_graph_image()
+        print(f"Compiled graph image saved at: {saved_file}")
+    except Exception as exc:
+        print(f"Failed to build/save compiled graph image: {exc}")

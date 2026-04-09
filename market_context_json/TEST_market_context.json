@@ -1,0 +1,104 @@
+{
+  "fetched_at_utc": "2026-04-09T05:02:04.675382+00:00",
+  "raw": {
+    "indices": [
+      {
+        "name": "Dow Jones",
+        "symbol_requested": "DJI",
+        "symbol_used": "DJI",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "S&P 500",
+        "symbol_requested": "SPX",
+        "symbol_used": "SPX",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "Nasdaq",
+        "symbol_requested": "IXIC",
+        "symbol_used": "IXIC",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "FTSE 100",
+        "symbol_requested": "UKX",
+        "symbol_used": "UKX",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "DAX",
+        "symbol_requested": "DAX",
+        "symbol_used": "DAX",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "CAC 40",
+        "symbol_requested": "CAC",
+        "symbol_used": "CAC",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "Nikkei 225",
+        "symbol_requested": "NIK",
+        "symbol_used": "NIK",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "Hang Seng",
+        "symbol_requested": "HSI",
+        "symbol_used": "HSI",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "Nifty 50",
+        "symbol_requested": "NSEI",
+        "symbol_used": "NSEI",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "Bank Nifty",
+        "symbol_requested": "NIFTY_BANK",
+        "symbol_used": "NIFTY_BANK",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      },
+      {
+        "name": "Sensex",
+        "symbol_requested": "BSESN",
+        "symbol_used": "BSESN",
+        "quote": null,
+        "error": "FINNHUB_API_KEY not set"
+      }
+    ],
+    "general_news": [],
+    "fear_greed": {
+      "value": "14",
+      "classification": "Extreme Fear",
+      "timestamp": "1775692800",
+      "error": null
+    }
+  },
+  "derived": {
+    "breadth": "indices_up=0, indices_down=0, indices_no_data=11",
+    "headline_count": 0,
+    "fear_greed_value": "14",
+    "fear_greed_label": "Extreme Fear",
+    "llm_context": "Global market context (indices + sentiment):\n### Index snapshots\n- Dow Jones: no quote (FINNHUB_API_KEY not set)\n- S&P 500: no quote (FINNHUB_API_KEY not set)\n- Nasdaq: no quote (FINNHUB_API_KEY not set)\n- FTSE 100: no quote (FINNHUB_API_KEY not set)\n- DAX: no quote (FINNHUB_API_KEY not set)\n- CAC 40: no quote (FINNHUB_API_KEY not set)\n- Nikkei 225: no quote (FINNHUB_API_KEY not set)\n- Hang Seng: no quote (FINNHUB_API_KEY not set)\n- Nifty 50: no quote (FINNHUB_API_KEY not set)\n- Bank Nifty: no quote (FINNHUB_API_KEY not set)\n- Sensex: no quote (FINNHUB_API_KEY not set)\n### Fear & Greed index: 14 (Extreme Fear)\n### Recent general headlines: none (API key or network)\n### Warnings\n- FINNHUB_API_KEY is not set; index quotes and Finnhub news are skipped.",
+    "warnings": [
+      "FINNHUB_API_KEY is not set; index quotes and Finnhub news are skipped."
+    ]
+  },
+  "warnings": [
+    "FINNHUB_API_KEY is not set; index quotes and Finnhub news are skipped."
+  ]
+}

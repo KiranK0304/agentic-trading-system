@@ -1,3 +1,10 @@
+"""
+LLM client factory — single place to create and configure LLM instances.
+
+Currently supports Groq (via OpenAI-compatible endpoint).
+Extend the `build_llm` function to add new providers.
+"""
+
 from langchain_openai import ChatOpenAI
 from langchain_core.language_models import BaseChatModel
 from pydantic import Field, BaseModel
@@ -8,14 +15,28 @@ load_dotenv()
 
 
 class LLMConfig(BaseModel):
-    """ all llm configuration in one place"""
-    provider: str = Field(default="openai", description="openai, anthropic, grok, etc.")
-    model_name: str = "llama-3.1-8b-instant"  #WHY TWICE?
-    temperature: float = 0.0
+    """All LLM configuration in one place."""
+    provider: str = Field(
+        default="openai",
+        description="LLM provider key: 'openai' routes to Groq's OpenAI-compatible API",
+    )
+    model_name: str = Field(
+        default="llama-3.3-70b-versatile",
+        description="Model identifier on the provider",
+    )
+    temperature: float = Field(
+        default=0.0,
+        description="Sampling temperature (0 = deterministic)",
+    )
 
 
 def build_llm(config: LLMConfig | None = None) -> BaseChatModel:
-    """Central place to create any LLM. No side effects at import time."""
+    """
+    Central factory for creating LLM clients.
+
+    Returns a plain ChatModel — call .with_structured_output(Schema)
+    yourself when you need structured output for a specific node.
+    """
     if config is None:
         config = LLMConfig()
 
@@ -24,19 +45,26 @@ def build_llm(config: LLMConfig | None = None) -> BaseChatModel:
             model=config.model_name,
             temperature=config.temperature,
             openai_api_base=os.environ.get("base_url"),
-            openai_api_key=os.environ.get("GROQ_API_KEY")
+            openai_api_key=os.environ.get("GROQ_API_KEY"),
         )
-    # Add other providers here (Anthropic, Grok via xAI, etc.)
+
+    # ── add more providers here ──
+    # if config.provider == "anthropic": ...
+    # if config.provider == "gemini": ...
+
     raise ValueError(f"Unsupported provider: {config.provider}")
 
-def build_structured_llm(schema: type[BaseModel], 
-                        config: LLMConfig | None = None,
-                        ) -> BaseChatModel:
-    """Convenience for nodes that need .with_structured_output()."""
-    llm = build_llm(config)
-    return llm.with_structured_output(schema)
 
-#=========================
-# Need more clarity 
-# In the above code
-#=========================
+def build_structured_llm(
+    schema: type[BaseModel],
+    config: LLMConfig | None = None,
+    method: str = "function_calling",
+) -> BaseChatModel:
+    """
+    Convenience wrapper: build an LLM and immediately attach
+    structured output for the given Pydantic schema.
+
+    Used by trading_agent.py to create sub-agent LLMs in one call.
+    """
+    llm = build_llm(config)
+    return llm.with_structured_output(schema, method=method)

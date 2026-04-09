@@ -1,21 +1,26 @@
-# After fetching data with your existing function
+# Agentic Trading System — CLI entry point
 from agent.trading_agent import run_trading_agent
-from data_loader import fetch_data
+from utils.data_loader import fetch_data
 
-# symbol = "SBIN.NS"
 
-print("Enter the stock symbol\
-    eg: SBIN.NS, TCS.NS, LT.NS")
+print("Enter the stock symbol")
+print("    eg: SBIN.NS, TCS.NS, LT.NS")
 
 symbol = input("Enter:  ")
 
-df = fetch_data(symbol, period="max")
+# period="5d" + interval="5m" is the safe combo for Yahoo Finance.
+# period="max" with 5m interval returns empty/broken data.
+df = fetch_data(symbol)
 
 if not df.empty:
     decision = run_trading_agent(df, symbol=symbol)
-    
-    # Example: Use the decision
+
+    # Quick summary after the full agent report
     if decision.decision == "BUY" and decision.confidence > 70:
-        print("Strong BUY signal from agent!")
-    elif decision.decision == "SELL":
-        print("Agent suggests exiting or shorting.")
+        print("\n🟢 Strong BUY signal from agent!")
+    elif decision.decision == "SELL" and decision.confidence > 70:
+        print("\n🔴 Strong SELL signal from agent!")
+    else:
+        print(f"\n⚪ {decision.decision} with moderate confidence ({decision.confidence}%)")
+else:
+    print(f"\n❌ Could not fetch data for {symbol}. Check the symbol and try again.")
