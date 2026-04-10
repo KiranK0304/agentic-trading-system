@@ -1,37 +1,37 @@
 {
-  "fetched_at_utc": "2026-04-09T13:44:04.051628+00:00",
+  "fetched_at_utc": "2026-04-10T18:20:14.389054+00:00",
   "indices": [
     {
       "name": "DAX",
-      "price": 44.06,
-      "change": -0.38,
-      "percent_change": -0.8551
+      "price": 44.2,
+      "change": -0.05,
+      "percent_change": -0.113
     },
     {
       "name": "CAC 40",
-      "price": 49.64,
-      "change": -0.67,
-      "percent_change": -1.3317
+      "price": 50.7,
+      "change": -0.57,
+      "percent_change": -1.1118
     }
   ],
   "headlines": [
-    "The Strait of Hormuz is not open as Iran controls access after ceasefire, UAE oil CEO says",
-    "Jim Cramer's top 10 things to watch in the stock market Thursday",
-    "Spain ramps up criticism of Israel, US, defying Trump threats",
-    "Halt to Iran attacks means Netanyahu's corruption trial will resume on Sunday",
-    "Iran's president says Israeli strikes on Lebanon render negotiations meaningless",
-    "India grants waivers for some ships to deliver Iran cargoes, sources say",
-    "Shipping traffic through Hormuz at virtual standstill despite ceasefire, data shows",
-    "As millions lose weight on GLP-1s, they're starting to turn to retailers to refresh their wardrobes",
-    "Strait of Hormuz is shut, must reopen without conditions, UAE oil giant ADNOC's CEO says",
-    "Olympic skier Lindsey Vonn doesn't rule out the 2030 games: 'I would only do it if I could be fast'"
+    "After years of war with Russia, Ukraine's farmers are hit by Iran conflict",
+    "US likely to extend Russian oil waiver to temper Iran war shock, sources say",
+    "Gold heads for weekly gain, US-Iran truce in focus",
+    "Jim Cramer offers two trade ideas: One is a trim after a big run, the other is a buy",
+    "US consumer sentiment dives to a record low in April amid Iran war",
+    "Vance warns Iran not to \"play us\" as he leaves for talks",
+    "Vance expects U.S. negotiations with Iran on war will be \u2018positive'",
+    "Iran war leaves crisis-scarred countries counting the cost",
+    "Oando plans $750 million drilling campaign, expects funding boost from Iran turmoil",
+    "Indian auto hub hikes minimum wage after protests over soaring costs due to Iran war"
   ],
   "fear_greed": {
-    "value": "14",
+    "value": "16",
     "classification": "Extreme Fear"
   },
   "derived": {
     "breadth": "indices_up=0, indices_down=2, indices_no_data=9",
-    "llm_context": "### Global market context\nIndices (available):\n  DAX: 44.06 \u25bc0.8551%\n  CAC 40: 49.64 \u25bc1.3317%\nFear & Greed: 14/100 \u2014 Extreme Fear\nHeadlines:\n  - The Strait of Hormuz is not open as Iran controls access after ceasefire, UAE oil CEO says\n  - Jim Cramer's top 10 things to watch in the stock market Thursday\n  - Spain ramps up criticism of Israel, US, defying Trump threats\n  - Halt to Iran attacks means Netanyahu's corruption trial will resume on Sunday\n  - Iran's president says Israeli strikes on Lebanon render negotiations meaningless"
+    "llm_context": "### Global market context\nIndices (available):\n  DAX: 44.2 \u25bc0.113%\n  CAC 40: 50.7 \u25bc1.1118%\nFear & Greed: 16/100 \u2014 Extreme Fear\nHeadlines:\n  - After years of war with Russia, Ukraine's farmers are hit by Iran conflict\n  - US likely to extend Russian oil waiver to temper Iran war shock, sources say\n  - Gold heads for weekly gain, US-Iran truce in focus\n  - Jim Cramer offers two trade ideas: One is a trim after a big run, the other is a buy\n  - US consumer sentiment dives to a record low in April amid Iran war"
   }
 }

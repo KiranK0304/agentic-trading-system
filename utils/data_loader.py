@@ -5,7 +5,7 @@ import yfinance as yf
 
 
 def fetch_data(
-    symbol: str,
+    symbol: str = "SBIN.NS",
     period: str = "5d",
     interval: str = "5m",
     max_retries: int = 3,

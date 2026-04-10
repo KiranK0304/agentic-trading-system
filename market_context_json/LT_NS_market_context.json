@@ -1,0 +1,37 @@
+{
+  "fetched_at_utc": "2026-04-09T16:43:35.513301+00:00",
+  "indices": [
+    {
+      "name": "DAX",
+      "price": 44.33,
+      "change": -0.11,
+      "percent_change": -0.2475
+    },
+    {
+      "name": "CAC 40",
+      "price": 50.78,
+      "change": 0.47,
+      "percent_change": 0.9342
+    }
+  ],
+  "headlines": [
+    "Jim Cramer says one thing surprises him most about Thursday's stock market",
+    "Hormuz at near standstill as Iran warns ships to keep to its waters",
+    "Student loan forgiveness for public servants could be pricier to access, after new changes",
+    "Why young Americans are buying $200 notebooks from a store in Paris",
+    "Exclusive: Iran war doubles Russia's main oil revenue to $9 bln in April, Reuters calculations show",
+    "Chevron sees Iran war oil boost, warns hedging to weigh",
+    "The Strait of Hormuz is not open as Iran controls access after ceasefire, UAE oil CEO says",
+    "Jim Cramer's top 10 things to watch in the stock market Thursday",
+    "Iran to let no more than 15 vessels a day to pass Strait of Hormuz, TASS cites a senior Iranian source",
+    "Spain ramps up criticism of Israel, US, defying Trump threats"
+  ],
+  "fear_greed": {
+    "value": "14",
+    "classification": "Extreme Fear"
+  },
+  "derived": {
+    "breadth": "indices_up=1, indices_down=1, indices_no_data=9",
+    "llm_context": "### Global market context\nIndices (available):\n  DAX: 44.33 \u25bc0.2475%\n  CAC 40: 50.78 \u25b20.9342%\nFear & Greed: 14/100 \u2014 Extreme Fear\nHeadlines:\n  - Jim Cramer says one thing surprises him most about Thursday's stock market\n  - Hormuz at near standstill as Iran warns ships to keep to its waters\n  - Student loan forgiveness for public servants could be pricier to access, after new changes\n  - Why young Americans are buying $200 notebooks from a store in Paris\n  - Exclusive: Iran war doubles Russia's main oil revenue to $9 bln in April, Reuters calculations show"
+  }
+}
