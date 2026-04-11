@@ -8,6 +8,8 @@ It is built on top of LangChain and LangGraph, treating Large Language Models (L
 
 Agentic systems solve complex problems by breaking them down into smaller, defined tasks. In this project, instead of passing everything to an LLM in a single prompt, we use LangGraph to construct a **Directed Acyclic Graph (DAG)**. 
 
+![LangGraph Architecture](trading_compiled_graph.png)
+
 The graph passes a shared state dictionary (`GraphState`) between specialized Python functions (called "nodes").
 
 The workflow executes in the following sequence:
