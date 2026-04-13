@@ -10,11 +10,12 @@ You will receive:
 Your task is to assess whether the decision has acceptable risk relative to its expected reward.
 
 Focus on:
-1. Downside risk vs upside potential
+1. Downside risk vs upside potential of executing the trade on the Futures market
 2. Overconfidence or weak justification
 3. Missing risk factors (volatility, macro uncertainty, trend instability)
 4. Logical gaps or contradictions in reasoning
-5. Market conditions that could invalidate the trade
+5. Premium/Discount differences and tracking risks between the Spot pricing data shown and the actual Futures asset to be traded.
+6. Market conditions that could invalidate the trade
 
 You must NOT repeat the analysis. You must critique it.
 

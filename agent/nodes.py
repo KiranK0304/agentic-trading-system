@@ -99,9 +99,15 @@ Symbol: {state["symbol"]}
 Total 5-min bars: {len(df)}
 Time range: {start_time} → {end_time}
 Latest Close: ₹{latest_close:.2f}
-Latest High : ₹{latest_high:.2f}
-Latest Low  : ₹{latest_low:.2f}
 Average Volume: {avg_volume:,}"""
+
+    live = state.get("live_snapshot")
+    if live:
+        summary += f"""\n
+--- LIVE SPOT SNAPSHOT ---
+LTP: ₹{live.get('ltp', 'N/A')} (Day Change: {live.get('change', 'N/A')}, {live.get('pChange', 'N/A')}%)
+Day Open: ₹{live.get('open')} | High: ₹{live.get('high')} | Low: ₹{live.get('low')}
+Data Source: {live.get('source')}"""
 
     recent_data = (
         df.tail(25)[["Open", "High", "Low", "Close", "Volume"]]

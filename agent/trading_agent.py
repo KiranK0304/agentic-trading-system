@@ -125,7 +125,7 @@ def build_trading_graph():
 
 # ====================== PUBLIC ENTRY POINT ======================
 
-def run_trading_agent(df: pd.DataFrame, symbol: str) -> AgentSchema:
+def run_trading_agent(df: pd.DataFrame, symbol: str, live_snapshot: dict) -> AgentSchema:
     """
     Main entry point: Runs the full pipeline including risk management 
     and final re-evaluated decision.
@@ -138,6 +138,7 @@ def run_trading_agent(df: pd.DataFrame, symbol: str) -> AgentSchema:
     initial_state: GraphState = {
         "df": df,
         "symbol": symbol,
+        "live_snapshot": live_snapshot,
         "run_timestamp": datetime.now().isoformat(),
         
         # Will be populated by nodes

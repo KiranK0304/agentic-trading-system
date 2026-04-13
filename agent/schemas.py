@@ -94,6 +94,7 @@ class GraphState(TypedDict):
     df: pd.DataFrame
     symbol: str
     run_timestamp: str | None
+    live_snapshot: dict | None
     
     # Populated by nodes
     data_summary: str | None
