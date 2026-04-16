@@ -18,4 +18,9 @@ dependencies = [
     "scipy>=1.15.3",
     "yahoo-finance>=1.4.0",
     "yfinance>=1.2.0",
+    "langchain>=1.2.15",
+    "langchain-community>=0.4.1",
+    "langgraph-checkpoint-sqlite>=3.0.3",
+    "langchain-nvidia-ai-endpoints>=1.2.1",
+    "ta>=0.11.0",
 ]

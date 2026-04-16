@@ -1,37 +1,37 @@
 {
-  "fetched_at_utc": "2026-04-13T18:12:22.016719+00:00",
+  "fetched_at_utc": "2026-04-16T17:58:42.716808+00:00",
   "indices": [
     {
       "name": "DAX",
-      "price": 44.35,
-      "change": 0.15,
-      "percent_change": 0.3394
+      "price": 45.01,
+      "change": -0.07,
+      "percent_change": -0.1553
     },
     {
       "name": "CAC 40",
-      "price": 50.77,
-      "change": -0.05,
-      "percent_change": -0.0984
+      "price": 49.73,
+      "change": -0.65,
+      "percent_change": -1.2902
     }
   ],
   "headlines": [
-    "Oracle pops 11%, leading bounce back rally in software stocks",
-    "NATO allies refuse to join Trump's Iranian port blockade",
-    "Wall Street still loves streaming, but are its affections well placed?",
-    "Wall St indexes mixed as US-Iran concerns clash with bargain-hunting",
-    "Why Jim Cramer is urging caution on Starbucks after an analyst upgrade",
-    "Stop making this 'off-putting' mistake when you talk to people: 'It backfires,' says psychologist",
-    "Iran war weighs on global economy as IMF meeting starts",
-    "Trump says Iranian 'fast-attack' ships that come close to US blockade will be eliminated",
-    "US to enforce blockade in Gulf of Oman, Arabian Sea, note to seafarers says",
-    "OPEC lowers second-quarter global oil demand forecast on Iran war"
+    "US military: 'locked and loaded' to strike Iran's power plants, energy industry if ordered",
+    "Exclusive: German government halves 2026 growth forecast to 0.5% amid Iran war, source says",
+    "Our 4 best and worst performing stocks since the Iran war market bottom",
+    "PepsiCo's bet on price cuts, brand refreshes pays off; flags Iran war cost risks",
+    "US weekly jobless claims drop amid labor market stability; Iran war a risk",
+    "Jim Cramer's top 10 things to watch in the stock market Thursday",
+    "Iran-US talks turn to interim deal amid rifts over nuclear work, Iranian sources say",
+    "How the wealthy are planning to cut their 2026 tax bills",
+    "Iran war exposes weakened state of Britain's armed forces",
+    "Spring homebuying season is here, but it\u2019s not bringing much price relief for buyers"
   ],
   "fear_greed": {
-    "value": "12",
+    "value": "23",
     "classification": "Extreme Fear"
   },
   "derived": {
-    "breadth": "indices_up=1, indices_down=1, indices_no_data=9",
-    "llm_context": "### Global market context\nIndices (available):\n  DAX: 44.35 \u25b20.3394%\n  CAC 40: 50.77 \u25bc0.0984%\nFear & Greed: 12/100 \u2014 Extreme Fear\nHeadlines:\n  - Oracle pops 11%, leading bounce back rally in software stocks\n  - NATO allies refuse to join Trump's Iranian port blockade\n  - Wall Street still loves streaming, but are its affections well placed?\n  - Wall St indexes mixed as US-Iran concerns clash with bargain-hunting\n  - Why Jim Cramer is urging caution on Starbucks after an analyst upgrade"
+    "breadth": "indices_up=0, indices_down=2, indices_no_data=9",
+    "llm_context": "### Global market context\nIndices (available):\n  DAX: 45.01 \u25bc0.1553%\n  CAC 40: 49.73 \u25bc1.2902%\nFear & Greed: 23/100 \u2014 Extreme Fear\nHeadlines:\n  - US military: 'locked and loaded' to strike Iran's power plants, energy industry if ordered\n  - Exclusive: German government halves 2026 growth forecast to 0.5% amid Iran war, source says\n  - Our 4 best and worst performing stocks since the Iran war market bottom\n  - PepsiCo's bet on price cuts, brand refreshes pays off; flags Iran war cost risks\n  - US weekly jobless claims drop amid labor market stability; Iran war a risk"
   }
 }

@@ -7,6 +7,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from .schemas import GraphState, AgentSchema, SubAgentAnalysis, RiskReview
 from utils.market_context import build_market_context_payload
+from utils.technical_indicators import generate_technical_summary
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 logger = logging.getLogger(__name__)
@@ -115,7 +116,13 @@ Data Source: {live.get('source')}"""
         .to_string(index=False)
     )
 
-    return {"data_summary": f"{summary}\n\nLast 25 candles:\n{recent_data}"}
+    try:
+        ta_summary = generate_technical_summary(df)
+    except Exception as e:
+        logger.warning(f"Failed to generate technical sumary: {e}")
+        ta_summary = f"Technical Indicators Error: {e}"
+
+    return {"data_summary": f"{summary}\n\n{ta_summary}\n\nLast 25 candles:\n{recent_data}"}
 
 
 # ──────────────────────────────────────────────────────────
