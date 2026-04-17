@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Trading Dashboard</title>
+    <meta name="description" content="Real-time multi-agent trading analysis dashboard powered by LangGraph">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="scanline"></div>
+
+    <header>
+        <div class="header-left">
+            <div class="logo-pulse"></div>
+            <h1>AGENTIC<span class="accent">TRADE</span></h1>
+        </div>
+        <div class="header-right">
+            <span class="asset-badge" id="assetBadge">NIFTY 50 FUTURES</span>
+            <span class="timestamp" id="timestamp">--:--:--</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="controls">
+            <button id="runBtn" class="run-btn">
+                <span class="btn-icon">&#9654;</span>
+                <span class="btn-text">Run Analysis</span>
+            </button>
+            <div class="status-bar">
+                <div class="status-dot" id="statusDot"></div>
+                <span class="status-text" id="statusText">Ready</span>
+            </div>
+        </div>
+
+        <div class="feed" id="feed">
+            <div class="feed-placeholder" id="feedPlaceholder">
+                <div class="placeholder-icon">&#9881;</div>
+                <p>Click <strong>Run Analysis</strong> to start the multi-agent pipeline</p>
+                <p class="sub">Agents will appear here as they complete their work</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
