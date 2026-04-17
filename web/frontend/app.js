@@ -1,4 +1,8 @@
-/* ── SSE Consumer & DOM Card Renderer ────────────────── */
+/* ── UI Logic & State ──────────────────────────────────── */
+
+const landingScreen = document.getElementById('landingScreen');
+const mainDashboard = document.getElementById('mainDashboard');
+const enterBtn = document.getElementById('enterBtn');
 
 const feed = document.getElementById('feed');
 const feedPlaceholder = document.getElementById('feedPlaceholder');
@@ -6,6 +10,12 @@ const runBtn = document.getElementById('runBtn');
 const statusDot = document.getElementById('statusDot');
 const statusText = document.getElementById('statusText');
 const timestampEl = document.getElementById('timestamp');
+
+// Enter Simulation Button
+enterBtn.addEventListener('click', () => {
+    landingScreen.classList.add('hidden');
+    mainDashboard.classList.remove('hidden');
+});
 
 // Update clock
 function updateClock() {
@@ -15,150 +25,167 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// Icon map for each step type
-const ICONS = {
-    init: '⏳',
-    data_ready: '📊',
-    prepare: '⚙',
-    market_context: '🌐',
-    fundamental: '📋',
-    technical: '📈',
-    risk_manager: '🛡',
-    orchestrator_initial: '🧠',
-    orchestrator_final: '✅',
-    error: '❌',
-    done: '✓',
+// Toggle text expansion for "See more"
+window.toggleText = function(btn) {
+    const content = btn.previousElementSibling;
+    if (content.classList.contains('truncated')) {
+        content.classList.remove('truncated');
+        btn.textContent = 'See less';
+    } else {
+        content.classList.add('truncated');
+        btn.textContent = 'See more';
+    }
 };
 
-const ICON_CLASS = {
-    prepare: 'prepare',
-    market_context: 'market',
-    fundamental: 'fundamental',
-    technical: 'technical',
-    risk_manager: 'risk',
-    orchestrator_initial: 'decision',
-    orchestrator_final: 'decision',
+// ── Agent Avatars & Meta Data ───────────────────────────
+
+const AGENT_META = {
+    init: { sys: true },
+    data_ready: { sys: true },
+    prepare: { sys: true },
+    market_context: { name: 'Market Observer', class: 'fund', initials: 'MO' },
+    fundamental: { name: 'Fundamental Agent', class: 'fund', initials: 'FA' },
+    technical: { name: 'Technical Agent', class: 'tech', initials: 'TA' },
+    risk_manager: { name: 'Risk Manager', class: 'risk', initials: 'RM' },
+    orchestrator_initial: { name: 'Orchestrator', class: 'orch', initials: 'OR' },
+    orchestrator_final: { name: 'Orchestrator', class: 'orch', initials: 'OR' },
+    error: { sys: true },
+    done: { sys: true },
 };
 
-// ── Card Builders ───────────────────────────────────────
+// ── Chat Message Builders ───────────────────────────────
 
-function buildInfoCard(data) {
-    return `
-        <div class="agent-card info-card">
-            <div class="card-header">
-                <div class="card-label">
-                    <div class="card-icon ${ICON_CLASS[data.step] || 'prepare'}">${ICONS[data.step] || '•'}</div>
-                    <span class="card-title">${esc(data.label)}</span>
+function buildChatWrapper(data, innerHTML, isDecision = false, isSell = false) {
+    const meta = AGENT_META[data.step] || { sys: true };
+    
+    if (meta.sys) {
+        return `
+            <div class="chat-message system">
+                <div class="chat-bubble">
+                    ${innerHTML}
                 </div>
             </div>
-            <div class="card-body">${esc(data.message || '')}</div>
-        </div>`;
-}
+        `;
+    }
 
-function buildMarketCard(data) {
+    let bubbleClass = isDecision ? 'decision-bubble' : '';
+    if (isSell) bubbleClass += ' sell';
+
     return `
-        <div class="agent-card info-card">
-            <div class="card-header">
-                <div class="card-label">
-                    <div class="card-icon market">🌐</div>
-                    <span class="card-title">${esc(data.label)}</span>
+        <div class="chat-message">
+            <div class="chat-avatar ${meta.class}">${meta.initials}</div>
+            <div class="chat-content">
+                <span class="chat-sender">${meta.name}</span>
+                <div class="chat-bubble ${bubbleClass}">
+                    ${innerHTML}
                 </div>
             </div>
-            <div class="card-body">
-                <p>Fear & Greed: <strong>${esc(data.fear_greed)}</strong> (${esc(data.fear_greed_value)}/100)</p>
-                <p>Market Breadth: ${esc(data.breadth)}</p>
-                <p>Headlines Parsed: ${data.headline_count}</p>
-            </div>
-        </div>`;
+        </div>
+    `;
 }
 
-function buildAnalysisCard(data) {
+function buildSystemMessage(data) {
+    return buildChatWrapper(data, `<em>${esc(data.message || '')}</em>`);
+}
+
+function buildMarketMessage(data) {
+    const html = `
+        <div class="chat-header">
+            <strong>${esc(data.label)}</strong>
+        </div>
+        <div class="text-content">
+            <p>Fear &amp; Greed: <strong>${esc(data.fear_greed)}</strong> (${esc(data.fear_greed_value)}/100)</p>
+            <p>Market Breadth: ${esc(data.breadth)}</p>
+            <p>Headlines Parsed: ${data.headline_count}</p>
+        </div>
+    `;
+    return buildChatWrapper(data, html);
+}
+
+function buildAnalysisMessage(data) {
     const signalClass = (data.signal || '').toLowerCase();
     const confLevel = data.confidence >= 70 ? 'high' : data.confidence >= 40 ? 'medium' : 'low';
     const factors = (data.key_factors || []).map(f => `<span class="factor-tag">${esc(f)}</span>`).join('');
 
-    return `
-        <div class="agent-card">
-            <div class="card-header">
-                <div class="card-label">
-                    <div class="card-icon ${ICON_CLASS[data.step] || ''}">${ICONS[data.step] || '📊'}</div>
-                    <span class="card-title">${esc(data.label)}</span>
-                </div>
-                <span class="signal-badge ${signalClass}">${esc(data.signal)}</span>
-            </div>
-            <div class="confidence-row">
-                <span class="confidence-label">Confidence</span>
-                <div class="confidence-track">
+    const html = `
+        <div class="chat-header">
+            <span class="signal-badge ${signalClass}">${esc(data.signal)}</span>
+            <div class="confidence-row" style="margin:0;">
+                <div class="confidence-track" style="width: 100px;">
                     <div class="confidence-fill ${confLevel}" style="width: ${data.confidence}%"></div>
                 </div>
-                <span class="confidence-value">${data.confidence}%</span>
+                <span class="confidence-value">${data.confidence}% conf.</span>
             </div>
-            ${factors ? `<div class="factors">${factors}</div>` : ''}
-            <div class="card-body">
-                <p>${esc(data.analysis || '')}</p>
-            </div>
-        </div>`;
+        </div>
+
+        ${factors ? `<div class="factors">${factors}</div>` : ''}
+        
+        <div class="text-content truncated">
+            ${esc(data.analysis || '').replace(/\n/g, '<br/>')}
+        </div>
+        <button class="see-more-btn" onclick="toggleText(this)">See more</button>
+    `;
+    return buildChatWrapper(data, html);
 }
 
-function buildRiskCard(data) {
+function buildRiskMessage(data) {
     const verdictClass = (data.verdict || '').toLowerCase();
-    const confAdj = data.confidence_adjustment ? ` → Adjusted to ${data.confidence_adjustment}%` : '';
+    const confAdj = data.confidence_adjustment ? ` → Adjusted to ${data.confidence_adjustment}% conf.` : '';
 
-    return `
-        <div class="agent-card">
-            <div class="card-header">
-                <div class="card-label">
-                    <div class="card-icon risk">🛡</div>
-                    <span class="card-title">${esc(data.label)}</span>
-                </div>
-                <span class="signal-badge ${verdictClass}">${esc(data.verdict)} · ${esc(data.risk_level)}</span>
-            </div>
-            <div class="card-body">
-                <p>${esc(data.critique)}${confAdj}</p>
-            </div>
-        </div>`;
+    const html = `
+        <div class="chat-header">
+            <span class="signal-badge ${verdictClass}">${esc(data.verdict)} RISK</span>
+            <strong>${esc(data.risk_level)} LEVEL</strong>
+        </div>
+        
+        <div class="text-content truncated">
+            ${esc(data.critique).replace(/\n/g, '<br/>')}
+            ${confAdj ? `<br/><br/><strong>Confidence adjustment:</strong> ${confAdj}` : ''}
+        </div>
+        <button class="see-more-btn" onclick="toggleText(this)">See more</button>
+    `;
+    return buildChatWrapper(data, html);
 }
 
-function buildDecisionCard(data) {
+function buildDecisionMessage(data, isFinal) {
     const decisionClass = (data.decision || '').toLowerCase();
     const isSell = decisionClass === 'sell';
     const confLevel = data.confidence >= 70 ? 'high' : data.confidence >= 40 ? 'medium' : 'low';
 
-    return `
-        <div class="agent-card final-decision ${isSell ? 'sell-decision' : ''}">
-            <div class="card-header">
-                <div class="card-label">
-                    <div class="card-icon decision">${isSell ? '🔴' : '🟢'}</div>
-                    <span class="card-title">${esc(data.label)}</span>
-                </div>
-                <span class="signal-badge ${decisionClass}">${esc(data.decision)}</span>
-            </div>
-            <div class="confidence-row">
-                <span class="confidence-label">Confidence</span>
-                <div class="confidence-track">
+    const html = `
+        <div class="chat-header">
+            <span class="signal-badge ${decisionClass}">${isFinal ? 'FINAL:' : 'INITIAL:'} ${esc(data.decision)}</span>
+            <div class="confidence-row" style="margin:0;">
+                <div class="confidence-track" style="width: 100px;">
                     <div class="confidence-fill ${confLevel}" style="width: ${data.confidence}%"></div>
                 </div>
-                <span class="confidence-value">${data.confidence}%</span>
+                <span class="confidence-value">${data.confidence}% conf.</span>
             </div>
-            <div class="card-body">
-                <p class="meta-line">Entry: ₹${Number(data.entry_price).toFixed(2)}</p>
-                <p><strong>Reasoning:</strong> ${esc(data.reasoning)}</p>
-                <p><strong>Risk Notes:</strong> ${esc(data.risk_notes)}</p>
-                ${data.ft_summary ? `<p><strong>Summary:</strong> ${esc(data.ft_summary)}</p>` : ''}
+        </div>
+
+        <div class="text-content truncated">
+            <div style="font-family: monospace; font-size: 0.8rem; margin-bottom: 0.5rem; color: var(--accent);">
+                Entry/Exit Level: ₹${Number(data.entry_price).toFixed(2)}
             </div>
-        </div>`;
+            
+            <p><strong>Reasoning:</strong><br/>${esc(data.reasoning).replace(/\n/g, '<br/>')}</p>
+            <br/>
+            <p><strong>Risk Notes:</strong><br/>${esc(data.risk_notes).replace(/\n/g, '<br/>')}</p>
+            ${data.ft_summary && isFinal ? `<br/><p><strong>Exec Summary:</strong><br/>${esc(data.ft_summary)}</p>` : ''}
+        </div>
+        <button class="see-more-btn" onclick="toggleText(this)">See more</button>
+    `;
+    return buildChatWrapper(data, html, true, isSell);
 }
 
 // ── Main SSE Handler ────────────────────────────────────
 
 function startAnalysis() {
-    // Clear feed
     feed.innerHTML = '';
     feedPlaceholder?.remove();
 
-    // UI state
     runBtn.disabled = true;
-    runBtn.querySelector('.btn-text').textContent = 'Running...';
+    runBtn.querySelector('.btn-text').textContent = 'Running simulation...';
     statusDot.className = 'status-dot running';
     statusText.textContent = 'Pipeline active';
 
@@ -172,67 +199,67 @@ function startAnalysis() {
             return;
         }
 
-        let cardHTML = '';
+        let chatHTML = '';
 
         switch (data.step) {
             case 'init':
             case 'data_ready':
             case 'prepare':
-                cardHTML = buildInfoCard(data);
+            case 'error':
+            case 'done':
+                chatHTML = buildSystemMessage(data);
+                if (data.step === 'error') {
+                    statusDot.className = 'status-dot error';
+                    statusText.textContent = 'Error';
+                    runBtn.disabled = false;
+                }
+                if (data.step === 'done') {
+                    statusDot.className = 'status-dot done';
+                    statusText.textContent = 'Simulation complete';
+                    runBtn.disabled = false;
+                    runBtn.querySelector('.btn-text').textContent = 'Run Analysis';
+                    source.close();
+                }
                 break;
 
             case 'market_context':
-                cardHTML = buildMarketCard(data);
+                chatHTML = buildMarketMessage(data);
                 break;
 
             case 'fundamental':
             case 'technical':
-                cardHTML = buildAnalysisCard(data);
+                chatHTML = buildAnalysisMessage(data);
                 break;
 
             case 'risk_manager':
-                cardHTML = buildRiskCard(data);
+                chatHTML = buildRiskMessage(data);
                 break;
 
             case 'orchestrator_initial':
-                cardHTML = buildAnalysisCard({
+                chatHTML = buildDecisionMessage({
                     ...data,
                     signal: data.decision,
                     key_factors: [],
                     analysis: data.reasoning,
-                });
+                }, false);
                 break;
 
             case 'orchestrator_final':
-                cardHTML = buildDecisionCard(data);
+                chatHTML = buildDecisionMessage(data, true);
                 break;
-
-            case 'error':
-                cardHTML = buildInfoCard(data);
-                statusDot.className = 'status-dot error';
-                statusText.textContent = 'Error';
-                break;
-
-            case 'done':
-                statusDot.className = 'status-dot done';
-                statusText.textContent = 'Analysis complete';
-                runBtn.disabled = false;
-                runBtn.querySelector('.btn-text').textContent = 'Run Analysis';
-                source.close();
-                return;
 
             default:
-                cardHTML = buildInfoCard(data);
+                chatHTML = buildSystemMessage(data);
         }
 
-        if (cardHTML) {
-            feed.insertAdjacentHTML('beforeend', cardHTML);
-            // Scroll the new card into view
-            feed.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        if (chatHTML) {
+            feed.insertAdjacentHTML('beforeend', chatHTML);
+            // Auto scroll container
+            const container = document.querySelector('.chat-container');
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            }
         }
-
-        // Update status
-        statusText.textContent = data.label || 'Processing...';
     };
 
     source.onerror = () => {
@@ -244,7 +271,7 @@ function startAnalysis() {
     };
 }
 
-// Escape HTML
+// Escape HTML utility
 function esc(str) {
     if (!str) return '';
     const d = document.createElement('div');
@@ -252,5 +279,4 @@ function esc(str) {
     return d.innerHTML;
 }
 
-// Bind button
 runBtn.addEventListener('click', startAnalysis);

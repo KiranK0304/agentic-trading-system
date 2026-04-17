@@ -13,37 +13,58 @@
 <body>
     <div class="scanline"></div>
 
-    <header>
-        <div class="header-left">
-            <div class="logo-pulse"></div>
-            <h1>AGENTIC<span class="accent">TRADE</span></h1>
-        </div>
-        <div class="header-right">
-            <span class="asset-badge" id="assetBadge">NIFTY 50 FUTURES</span>
-            <span class="timestamp" id="timestamp">--:--:--</span>
-        </div>
-    </header>
-
-    <main>
-        <div class="controls">
-            <button id="runBtn" class="run-btn">
-                <span class="btn-icon">&#9654;</span>
-                <span class="btn-text">Run Analysis</span>
+    <!-- Landing Screen -->
+    <div id="landingScreen" class="landing-screen">
+        <div class="landing-content">
+            <div class="logo-pulse large"></div>
+            <h1 class="landing-title">Agentic<span class="accent">Trade</span> System</h1>
+            <p class="landing-subtitle">Developed by Kiran</p>
+            <p class="landing-desc">
+                Simulate NIFTY 50 Futures trading through multi-agent LLM reasoning, technical analysis, and real-time risk assessment.
+            </p>
+            <button id="enterBtn" class="enter-btn">
+                <span>Enter Simulation</span>
+                <span class="btn-arrow">→</span>
             </button>
-            <div class="status-bar">
-                <div class="status-dot" id="statusDot"></div>
-                <span class="status-text" id="statusText">Ready</span>
-            </div>
         </div>
+    </div>
 
-        <div class="feed" id="feed">
-            <div class="feed-placeholder" id="feedPlaceholder">
-                <div class="placeholder-icon">&#9881;</div>
-                <p>Click <strong>Run Analysis</strong> to start the multi-agent pipeline</p>
-                <p class="sub">Agents will appear here as they complete their work</p>
+    <!-- Main Dashboard (Initially Hidden) -->
+    <div id="mainDashboard" class="main-dashboard hidden">
+        <header>
+            <div class="header-left">
+                <div class="logo-pulse"></div>
+                <h1>AGENTIC<span class="accent">TRADE</span></h1>
             </div>
-        </div>
-    </main>
+            <div class="header-right">
+                <span class="asset-badge" id="assetBadge">NIFTY 50 FUTURES</span>
+                <span class="timestamp" id="timestamp">--:--:--</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="chat-container">
+                <div class="feed" id="feed">
+                    <div class="feed-placeholder" id="feedPlaceholder">
+                        <div class="placeholder-icon">&#9881;</div>
+                        <p>Simulation Ready</p>
+                        <p class="sub">Click Run to initialize agent group chat</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls-bar">
+                <button id="runBtn" class="run-btn">
+                    <span class="btn-icon">&#9654;</span>
+                    <span class="btn-text">Run Analysis</span>
+                </button>
+                <div class="status-bar">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span class="status-text" id="statusText">Ready</span>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <script src="/static/app.js"></script>
 </body>

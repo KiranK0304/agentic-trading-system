@@ -1,37 +1,37 @@
 {
-  "fetched_at_utc": "2026-04-16T17:58:42.716808+00:00",
+  "fetched_at_utc": "2026-04-17T09:31:22.988235+00:00",
   "indices": [
     {
       "name": "DAX",
-      "price": 45.01,
-      "change": -0.07,
-      "percent_change": -0.1553
+      "price": 44.985,
+      "change": -0.095,
+      "percent_change": -0.2107
     },
     {
       "name": "CAC 40",
-      "price": 49.73,
-      "change": -0.65,
-      "percent_change": -1.2902
+      "price": 49.66,
+      "change": -0.72,
+      "percent_change": -1.4291
     }
   ],
   "headlines": [
+    "Trump says Iran war should end 'soon', says Hezbollah should support truce",
+    "Gold holds steady, eyes fourth weekly gain on US-Iran peace deal hopes",
+    "South Korea draws back investors even as Iran war exposes cracks",
+    "China steps up Iran diplomacy while seeking smooth summit with Trump",
+    "Iran peace talk optimism trips dollar for second straight week",
+    "Oil falls on prospects for talks to end Iran war",
+    "G7 finance chiefs push for 'lasting peace' in Middle East, warn of war's economic damage",
     "US military: 'locked and loaded' to strike Iran's power plants, energy industry if ordered",
-    "Exclusive: German government halves 2026 growth forecast to 0.5% amid Iran war, source says",
-    "Our 4 best and worst performing stocks since the Iran war market bottom",
-    "PepsiCo's bet on price cuts, brand refreshes pays off; flags Iran war cost risks",
-    "US weekly jobless claims drop amid labor market stability; Iran war a risk",
-    "Jim Cramer's top 10 things to watch in the stock market Thursday",
-    "Iran-US talks turn to interim deal amid rifts over nuclear work, Iranian sources say",
-    "How the wealthy are planning to cut their 2026 tax bills",
-    "Iran war exposes weakened state of Britain's armed forces",
-    "Spring homebuying season is here, but it\u2019s not bringing much price relief for buyers"
+    "Exclusive: US to delay weapons deliveries to some European countries due to Iran war, sources say",
+    "Exclusive: Kenya requests World Bank funds to cushion Iran war shock, central bank chief says"
   ],
   "fear_greed": {
-    "value": "23",
+    "value": "21",
     "classification": "Extreme Fear"
   },
   "derived": {
     "breadth": "indices_up=0, indices_down=2, indices_no_data=9",
-    "llm_context": "### Global market context\nIndices (available):\n  DAX: 45.01 \u25bc0.1553%\n  CAC 40: 49.73 \u25bc1.2902%\nFear & Greed: 23/100 \u2014 Extreme Fear\nHeadlines:\n  - US military: 'locked and loaded' to strike Iran's power plants, energy industry if ordered\n  - Exclusive: German government halves 2026 growth forecast to 0.5% amid Iran war, source says\n  - Our 4 best and worst performing stocks since the Iran war market bottom\n  - PepsiCo's bet on price cuts, brand refreshes pays off; flags Iran war cost risks\n  - US weekly jobless claims drop amid labor market stability; Iran war a risk"
+    "llm_context": "### Global market context\nIndices (available):\n  DAX: 44.985 \u25bc0.2107%\n  CAC 40: 49.66 \u25bc1.4291%\nFear & Greed: 21/100 \u2014 Extreme Fear\nHeadlines:\n  - Trump says Iran war should end 'soon', says Hezbollah should support truce\n  - Gold holds steady, eyes fourth weekly gain on US-Iran peace deal hopes\n  - South Korea draws back investors even as Iran war exposes cracks\n  - China steps up Iran diplomacy while seeking smooth summit with Trump\n  - Iran peace talk optimism trips dollar for second straight week"
   }
 }
