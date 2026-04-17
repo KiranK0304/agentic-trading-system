@@ -37,18 +37,21 @@ def build_trading_graph():
 
     # ── LLM Configurations ─────────────────────────────────────
     subagent_conf = LLMConfig(
+        provider="groq",
         model_name="llama-3.1-8b-instant",
         temperature=0.2,
     )
 
     orchestrator_conf = LLMConfig(
+        provider="groq",
         model_name="llama-3.3-70b-versatile",
         temperature=0.0,
     )
 
     risk_conf = LLMConfig(
+        provider="groq",
         model_name="llama-3.3-70b-versatile",
-        temperature=0.1,          # Slightly more conservative for risk
+        temperature=0.1,
     )
 
     # ── Build Structured LLMs ──────────────────────────────────
