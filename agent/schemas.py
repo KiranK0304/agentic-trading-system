@@ -1,6 +1,22 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import Literal, Optional, TypedDict, Any
 import pandas as pd
+import json
+
+
+def _coerce_list(v):
+    """Accept both a real list and a JSON-encoded string of a list."""
+    if isinstance(v, list):
+        return v
+    if isinstance(v, str):
+        try:
+            parsed = json.loads(v)
+            if isinstance(parsed, list):
+                return parsed
+        except (json.JSONDecodeError, TypeError):
+            pass
+        return [v]
+    return v
 
 
 class SubAgentAnalysis(BaseModel):
@@ -23,6 +39,11 @@ class SubAgentAnalysis(BaseModel):
         ...,
         description="Top 3-5 most important factors driving the signal. Each as a short, concise sentence.",
     )
+
+    @field_validator("key_factors", mode="before")
+    @classmethod
+    def _parse_key_factors(cls, v):
+        return _coerce_list(v)
 
 
 class AgentSchema(BaseModel):

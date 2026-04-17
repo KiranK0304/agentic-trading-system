@@ -34,23 +34,25 @@ def build_trading_graph():
     - Risk Manager
     - Orchestrator (second pass - re-evaluation)
     """
+    provider = "openrouter"
+    # model_name = "deepseek/deepseek-r1"
 
     # ── LLM Configurations ─────────────────────────────────────
     subagent_conf = LLMConfig(
-        provider="groq",
-        model_name="llama-3.1-8b-instant",
+        provider=provider,
+        model_name="meta-llama/llama-3.1-8b-instruct",
         temperature=0.2,
     )
 
     orchestrator_conf = LLMConfig(
-        provider="groq",
-        model_name="llama-3.3-70b-versatile",
+        provider=provider,
+        model_name="meta-llama/llama-3.3-70b-instruct",
         temperature=0.0,
     )
 
     risk_conf = LLMConfig(
-        provider="groq",
-        model_name="llama-3.3-70b-versatile",
+        provider=provider,
+        model_name="meta-llama/llama-3.3-70b-instruct",
         temperature=0.1,
     )
 
