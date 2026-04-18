@@ -148,6 +148,7 @@ def run_trading_agent(df: pd.DataFrame, symbol: str, live_snapshot: dict) -> Age
         
         # Will be populated by nodes
         "data_summary": None,
+        "fundamental_context": None,
         "market_context": None,
         "fundamental_analysis": None,
         "technical_analysis": None,

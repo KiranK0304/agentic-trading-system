@@ -118,7 +118,8 @@ class GraphState(TypedDict):
     live_snapshot: dict | None
     
     # Populated by nodes
-    data_summary: str | None
+    data_summary: str | None            # Full summary WITH technical indicators (for technical agent)
+    fundamental_context: str | None     # Price/volume/macro only, NO technical indicators (for fundamental agent)
     market_context: dict[str, Any] | None
     fundamental_analysis: SubAgentAnalysis | None
     technical_analysis: SubAgentAnalysis | None

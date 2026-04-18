@@ -116,13 +116,19 @@ Data Source: {live.get('source')}"""
         .to_string(index=False)
     )
 
+    # ── Fundamental context: price, volume, macro (NO technical indicators) ──
+    fundamental_context = f"{summary}\n\nLast 25 candles:\n{recent_data}"
+
+    # ── Technical context: everything above + computed indicators ──
     try:
         ta_summary = generate_technical_summary(df)
     except Exception as e:
-        logger.warning(f"Failed to generate technical sumary: {e}")
+        logger.warning(f"Failed to generate technical summary: {e}")
         ta_summary = f"Technical Indicators Error: {e}"
 
-    return {"data_summary": f"{summary}\n\n{ta_summary}\n\nLast 25 candles:\n{recent_data}"}
+    data_summary = f"{summary}\n\n{ta_summary}\n\nLast 25 candles:\n{recent_data}"
+
+    return {"data_summary": data_summary, "fundamental_context": fundamental_context}
 
 
 # ──────────────────────────────────────────────────────────
@@ -162,7 +168,7 @@ def make_fundamental_node(
         """Run the fundamental analysis sub-agent."""
         chain = prompt_template | llm_with_structured_output
         result: SubAgentAnalysis = chain.invoke({
-            "data_context": state.get("data_summary", "No data available."),
+            "data_context": state.get("fundamental_context") or state.get("data_summary", "No data available."),
             "macro_context": _get_macro_context(state),
         })
         return {"fundamental_analysis": result}

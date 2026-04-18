@@ -149,6 +149,7 @@ async def stream_trading_analysis() -> AsyncGenerator[str, None]:
         "live_snapshot": live_snapshot,
         "run_timestamp": datetime.now().isoformat(),
         "data_summary": None,
+        "fundamental_context": None,
         "market_context": None,
         "fundamental_analysis": None,
         "technical_analysis": None,
@@ -158,14 +159,17 @@ async def stream_trading_analysis() -> AsyncGenerator[str, None]:
     }
 
     # 4. Stream through the graph node-by-node
-    for event in agent.stream(running_state):
-        for node_name, node_output in event.items():
-            # Merge node output into running state for context
-            if isinstance(node_output, dict):
-                running_state.update(node_output)
+    try:
+        for event in agent.stream(running_state):
+            for node_name, node_output in event.items():
+                # Merge node output into running state for context
+                if isinstance(node_output, dict):
+                    running_state.update(node_output)
 
-            payload = _serialize_node_output(node_name, node_output, running_state)
-            yield _sse(payload)
+                payload = _serialize_node_output(node_name, node_output, running_state)
+                yield _sse(payload)
+    except Exception as e:
+        yield _sse({"step": "error", "label": "Pipeline Error", "message": str(e)})
 
     # 5. Done
     yield _sse({"step": "done", "label": "Complete", "message": "Analysis complete."})
