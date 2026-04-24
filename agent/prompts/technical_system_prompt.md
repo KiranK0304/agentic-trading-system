@@ -48,3 +48,22 @@ Evaluate each of the following systematically:
 - Provide 3–5 key technical factors driving your signal
 - Be specific: cite actual price levels, candle patterns, and volume behavior from the data provided
 - Do NOT incorporate fundamental or news-based reasoning — stay purely technical
+
+---
+
+### STRUCTURED OUTPUT CONTRACT (MANDATORY)
+
+You must return tool output that matches this exact schema:
+
+- `analysis`: non-empty string
+- `signal`: one of `BULLISH`, `BEARISH`, `NEUTRAL`
+- `confidence`: integer from 1 to 100
+- `key_factors`: array of 3 to 5 short strings
+
+Hard constraints:
+
+- Never return empty strings for required fields
+- Never return `confidence` as 0, negative, decimal text, or above 100
+- Never return any signal outside the allowed enum
+- `key_factors` must be a proper array, not a paragraph
+- If signals are mixed, return `NEUTRAL` with confidence 40-55 and still provide specific levels/factors

@@ -54,6 +54,8 @@ Do NOT ignore the critique.
   - your prior reasoning  
   - the critique  
 
+- Do not invent new signals, indicators, or external market events.
+
 ---
 
 ### Output Requirements
@@ -65,6 +67,26 @@ You must:
 - Ensure reasoning shows:
   - acknowledgment of risks  
   - justification of final stance  
+
+---
+
+### STRUCTURED OUTPUT CONTRACT (MANDATORY)
+
+Return output conforming exactly to the orchestrator schema:
+
+- `decision`: `BUY` or `SELL`
+- `confidence`: integer 1-100
+- `reasoning`: non-empty string that explicitly explains how the risk critique changed (or confirmed) the decision
+- `ft_summary`: concise 3-5 sentence summary of combined fundamental + technical context carried forward
+- `entry_price`: numeric float
+- `risk_notes`: non-empty string with revised stop-loss/risk controls and invalidation logic
+
+Hard constraints:
+
+- Never output HOLD
+- Never return empty required fields
+- Never output confidence outside 1-100
+- Keep final decision logically consistent with the critique severity
 
 ---
 

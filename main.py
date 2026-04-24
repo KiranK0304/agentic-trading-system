@@ -20,7 +20,20 @@ def main():
         return
 
     # Pass both live snapshot and historical data to the trading agent
-    decision = run_trading_agent(df=df, symbol=TARGET_ASSET, live_snapshot=live_snapshot)
+    try:
+        decision = run_trading_agent(df=df, symbol=TARGET_ASSET, live_snapshot=live_snapshot)
+    except Exception as exc:
+        err = str(exc)
+        print("\n❌ Agent pipeline failed.")
+
+        if "ValidationError" in err or "literal_error" in err or "greater_than_equal" in err:
+            print("Reason: Model returned an invalid structured response for one of the agent schemas.")
+            print("Action: Re-run once; if it repeats, switch to a stronger model or lower temperature.")
+        else:
+            print("Reason:", err)
+
+        print("Hint: Check API key, model availability on OpenRouter, and network stability.")
+        return
 
     # Quick summary after the full agent report
     if decision.decision == "BUY" and decision.confidence > 70:

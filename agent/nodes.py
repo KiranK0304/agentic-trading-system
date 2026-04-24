@@ -167,10 +167,22 @@ def make_fundamental_node(
     def fundamental_node(state: GraphState) -> dict:
         """Run the fundamental analysis sub-agent."""
         chain = prompt_template | llm_with_structured_output
-        result: SubAgentAnalysis = chain.invoke({
-            "data_context": state.get("fundamental_context") or state.get("data_summary", "No data available."),
-            "macro_context": _get_macro_context(state),
-        })
+        try:
+            result: SubAgentAnalysis = chain.invoke({
+                "data_context": state.get("fundamental_context") or state.get("data_summary", "No data available."),
+                "macro_context": _get_macro_context(state),
+            })
+        except Exception as e:
+            logger.warning("Fundamental sub-agent parse failed; using safe fallback output: %s", e)
+            result = SubAgentAnalysis(
+                analysis=(
+                    "Fundamental agent returned invalid structured output. "
+                    "Falling back to a neutral signal to keep the pipeline running."
+                ),
+                signal="NEUTRAL",
+                confidence=35,
+                key_factors=["Structured output parse failure in fundamental sub-agent."],
+             )
         return {"fundamental_analysis": result}
 
     return fundamental_node
@@ -198,10 +210,22 @@ def make_technical_node(
     def technical_node(state: GraphState) -> dict:
         """Run the technical analysis sub-agent."""
         chain = prompt_template | llm_with_structured_output
-        result: SubAgentAnalysis = chain.invoke({
-            "data_context": state.get("data_summary", "No data available."),
-            "macro_context": _get_macro_context(state),
-        })
+        try:
+            result: SubAgentAnalysis = chain.invoke({
+                "data_context": state.get("data_summary", "No data available."),
+                "macro_context": _get_macro_context(state),
+            })
+        except Exception as e:
+            logger.warning("Technical sub-agent parse failed; using safe fallback output: %s", e)
+            result = SubAgentAnalysis(
+                analysis=(
+                    "Technical agent returned invalid structured output. "
+                    "Falling back to a neutral signal to keep the pipeline running."
+                ),
+                signal="NEUTRAL",
+                confidence=35,
+                key_factors=["Structured output parse failure in technical sub-agent."],
+            )
         return {"technical_analysis": result}
 
     return technical_node

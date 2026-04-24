@@ -22,28 +22,55 @@ def _coerce_list(v):
 class SubAgentAnalysis(BaseModel):
     """Structured output from fundamental or technical analysis sub-agents."""
     analysis: str = Field(
-        ...,
+        default="No analysis provided.",
         description="Detailed analysis reasoning — cite specific data points, patterns, and observations from the provided data and market context.",
     )
     signal: Literal["BULLISH", "BEARISH", "NEUTRAL"] = Field(
-        ...,
+        default="NEUTRAL",
         description="Clear directional signal based on the analysis.",
     )
     confidence: int = Field(
-        ..., 
+        default=50,
         ge=1, 
         le=100,
         description="Confidence in the signal (1-100). Be honest about uncertainty.",
     )
     key_factors: list[str] = Field(
-        ...,
+        default_factory=list,
         description="Top 3-5 most important factors driving the signal. Each as a short, concise sentence.",
     )
+
+    @field_validator("signal", mode="before")
+    @classmethod
+    def _normalize_signal(cls, v):
+        if isinstance(v, str):
+            normalized = v.strip().upper()
+            if normalized in {"BULLISH", "BEARISH", "NEUTRAL"}:
+                return normalized
+        return "NEUTRAL"
+
+    @field_validator("confidence", mode="before")
+    @classmethod
+    def _normalize_confidence(cls, v):
+        try:
+            if isinstance(v, str):
+                v = v.strip()
+            value = int(float(v))
+        except (TypeError, ValueError):
+            return 50
+        if value < 1:
+            return 1
+        if value > 100:
+            return 100
+        return value
 
     @field_validator("key_factors", mode="before")
     @classmethod
     def _parse_key_factors(cls, v):
-        return _coerce_list(v)
+        parsed = _coerce_list(v)
+        if parsed in (None, "", []):
+            return ["No key factors provided by model output."]
+        return parsed
 
 
 class AgentSchema(BaseModel):

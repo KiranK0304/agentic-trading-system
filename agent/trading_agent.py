@@ -35,24 +35,24 @@ def build_trading_graph():
     - Orchestrator (second pass - re-evaluation)
     """
     provider = "openrouter"
-    # model_name = "deepseek/deepseek-r1"
+    model_name = "openai/gpt-oss-120b:free"
 
     # ── LLM Configurations ─────────────────────────────────────
     subagent_conf = LLMConfig(
         provider=provider,
-        model_name="meta-llama/llama-3.1-8b-instruct",
+        model_name=model_name,
         temperature=0.2,
     )
 
     orchestrator_conf = LLMConfig(
         provider=provider,
-        model_name="meta-llama/llama-3.3-70b-instruct",
+        model_name=model_name,
         temperature=0.0,
     )
 
     risk_conf = LLMConfig(
         provider=provider,
-        model_name="meta-llama/llama-3.3-70b-instruct",
+        model_name=model_name,
         temperature=0.1,
     )
 
