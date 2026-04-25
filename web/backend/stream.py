@@ -9,6 +9,7 @@ import json
 import asyncio
 from datetime import datetime
 from typing import AsyncGenerator
+from collections.abc import Mapping
 
 import pandas as pd
 
@@ -38,28 +39,40 @@ def _sse(payload: dict) -> str:
 def _serialize_node_output(node_name: str, data: dict, state: dict) -> dict:
     """Convert raw node output into a clean JSON-serializable event."""
 
+    def _pick(container, key):
+        if isinstance(container, Mapping):
+            return container.get(key)
+        return None
+
+    def _get_field(obj, field, default=None):
+        if obj is None:
+            return default
+        if isinstance(obj, Mapping):
+            return obj.get(field, default)
+        return getattr(obj, field, default)
+
     if node_name == "fundamental":
-        analysis = state.get("fundamental_analysis")
+        analysis = _pick(data, "fundamental_analysis") or state.get("fundamental_analysis")
         if analysis:
             return {
                 "step": "fundamental",
                 "label": "Fundamental Analysis",
-                "signal": analysis.signal,
-                "confidence": analysis.confidence,
-                "key_factors": analysis.key_factors,
-                "analysis": analysis.analysis,
+                "signal": _get_field(analysis, "signal", "NEUTRAL"),
+                "confidence": _get_field(analysis, "confidence", 50),
+                "key_factors": _get_field(analysis, "key_factors", []),
+                "analysis": _get_field(analysis, "analysis", "No analysis provided."),
             }
 
     elif node_name == "technical":
-        analysis = state.get("technical_analysis")
+        analysis = _pick(data, "technical_analysis") or state.get("technical_analysis")
         if analysis:
             return {
                 "step": "technical",
                 "label": "Technical Analysis",
-                "signal": analysis.signal,
-                "confidence": analysis.confidence,
-                "key_factors": analysis.key_factors,
-                "analysis": analysis.analysis,
+                "signal": _get_field(analysis, "signal", "NEUTRAL"),
+                "confidence": _get_field(analysis, "confidence", 50),
+                "key_factors": _get_field(analysis, "key_factors", []),
+                "analysis": _get_field(analysis, "analysis", "No analysis provided."),
             }
 
     elif node_name == "risk_manager":
@@ -101,13 +114,15 @@ def _serialize_node_output(node_name: str, data: dict, state: dict) -> dict:
     elif node_name == "market_context":
         ctx = state.get("market_context", {})
         derived = ctx.get("derived", {})
+        fear_greed = ctx.get("fear_greed", {}) if isinstance(ctx, Mapping) else {}
+        headlines = ctx.get("headlines", []) if isinstance(ctx, Mapping) else []
         return {
             "step": "market_context",
             "label": "Market Context",
-            "fear_greed": derived.get("fear_greed_label", "N/A"),
-            "fear_greed_value": derived.get("fear_greed_value", "N/A"),
+            "fear_greed": fear_greed.get("classification", "N/A"),
+            "fear_greed_value": fear_greed.get("value", "N/A"),
             "breadth": derived.get("breadth", "N/A"),
-            "headline_count": derived.get("headline_count", 0),
+            "headline_count": len(headlines),
         }
 
     return {"step": node_name, "label": NODE_LABELS.get(node_name, node_name), "message": "Completed."}
@@ -163,7 +178,7 @@ async def stream_trading_analysis() -> AsyncGenerator[str, None]:
         for event in agent.stream(running_state):
             for node_name, node_output in event.items():
                 # Merge node output into running state for context
-                if isinstance(node_output, dict):
+                if isinstance(node_output, Mapping):
                     running_state.update(node_output)
 
                 payload = _serialize_node_output(node_name, node_output, running_state)

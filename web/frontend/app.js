@@ -123,15 +123,17 @@ function marketMsg(d) {
 }
 
 function analysisMsg(d) {
-    const sc = (d.signal||'').toLowerCase();
-    const cl = d.confidence>=70?'high':d.confidence>=40?'medium':'low';
+    const signal = d.signal || 'NEUTRAL';
+    const confidence = Number.isFinite(Number(d.confidence)) ? Number(d.confidence) : 50;
+    const sc = String(signal).toLowerCase();
+    const cl = confidence>=70?'high':confidence>=40?'medium':'low';
     const ft = (d.key_factors||[]).map(f=>`<span class="factor-tag">${esc(f)}</span>`).join('');
     return wrap(d, `
         <div class="chat-header">
-            <span class="signal-badge ${sc}">${esc(d.signal)}</span>
+            <span class="signal-badge ${sc}">${esc(signal)}</span>
             <div class="confidence-row">
-                <div class="confidence-track" style="width:90px"><div class="confidence-fill ${cl}" style="width:${d.confidence}%"></div></div>
-                <span class="confidence-value">${d.confidence}%</span>
+                <div class="confidence-track" style="width:90px"><div class="confidence-fill ${cl}" style="width:${confidence}%"></div></div>
+                <span class="confidence-value">${confidence}%</span>
             </div>
         </div>
         ${ft?`<div class="factors">${ft}</div>`:''}

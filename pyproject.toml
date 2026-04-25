@@ -26,4 +26,7 @@ dependencies = [
     "fastapi>=0.136.0",
     "uvicorn[standard]>=0.44.0",
     "sse-starlette>=3.3.4",
+    "nsepython>=2.97",
+    "pip>=26.0.1",
+    "setuptools>=82.0.1",
 ]
