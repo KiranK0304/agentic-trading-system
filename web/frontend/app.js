@@ -121,28 +121,39 @@ window.toggleText = function(btn) {
 };
 
 // ═══════════════════════════════════════════════════════════
-// 5. RING PROGRESS
+// 5. PROGRESS LOG (SIDE PANEL)
 // ═══════════════════════════════════════════════════════════
-const TOTAL_STEPS = 7;
-let currentStep = 0;
-const CIRCUMFERENCE = 2 * Math.PI * 90;
+const logStream = document.getElementById('logStream');
 
-function updateRing(label) {
-    currentStep++;
-    const pct = Math.min(currentStep / TOTAL_STEPS, 1);
-    ringProgress.style.strokeDashoffset = CIRCUMFERENCE * (1 - pct);
-    ringLabel.textContent = label || 'WORKING';
-    if (pct >= 1) {
-        ringProgress.style.stroke = 'var(--green)';
-        ringLabel.textContent = 'DONE';
+function updateLog(message, statusClass = 'done') {
+    const time = new Date().toLocaleTimeString('en-IN', { hour12: false });
+    const template = `
+        <div class="log-entry">
+            <span class="timestamp-log">[${time}]</span>
+            <span>${message}</span>
+        </div>`;
+    
+    // Previous logs lose 'active' and become normal or done
+    const prev = logStream.lastElementChild;
+    if (prev && prev.classList.contains('active')) {
+        prev.classList.remove('active');
+        prev.classList.add(statusClass);
     }
+
+    logStream.insertAdjacentHTML('beforeend', template);
+    
+    // New log gets active class if not done yet
+    const cur = logStream.lastElementChild;
+    if (statusClass !== 'error' && message.indexOf('[COMPLETE]') === -1) {
+        cur.classList.add('active');
+    } else {
+        cur.classList.add(statusClass);
+    }
+    logStream.scrollTop = logStream.scrollHeight;
 }
-function resetRing() {
-    currentStep = 0;
-    ringProgress.style.strokeDashoffset = CIRCUMFERENCE;
-    ringProgress.style.stroke = 'var(--accent)';
-    ringLabel.textContent = 'IDLE';
-    ambientRing.classList.remove('active');
+
+function resetLog() {
+    logStream.innerHTML = '';
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -364,9 +375,10 @@ function startAnalysis() {
     feed.innerHTML = '';
     feedPlaceholder?.remove();
     messageQueue = [];
-    resetRing();
+    resetLog();
     resetTimeline();
-    ambientRing.classList.add('active');
+    
+    updateLog('INITIALIZING PIPELINE...');
 
     runBtn.disabled = true;
     runBtn.querySelector('.btn-text').textContent = 'Analyzing...';
@@ -383,45 +395,47 @@ function startAnalysis() {
         switch (d.step) {
             case 'init': case 'data_ready': case 'prepare':
                 html = sysMsg(d);
-                updateRing('DATA');
+                updateLog('FETCHING NIFTY 50 DATA...');
                 activateStage('data');
                 break;
             case 'market_context':
                 html = marketMsg(d);
-                updateRing('MACRO');
+                updateLog('ANALYZING MACRO MARKET CONTEXT...');
                 activateStage('macro');
                 break;
             case 'fundamental':
                 html = analysisMsg(d);
-                updateRing('FUND');
+                updateLog('FUNDAMENTAL AGENT REVIEWING...');
                 activateStage('fund');
                 break;
             case 'technical':
                 html = analysisMsg(d);
-                updateRing('TECH');
+                updateLog('TECHNICAL AGENT REVIEWING...');
                 activateStage('tech');
                 break;
             case 'risk_manager':
                 html = riskMsg(d);
-                updateRing('RISK');
+                updateLog('RISK MANAGEMENT EVALUATION...');
                 activateStage('risk');
                 break;
             case 'orchestrator_initial':
                 html = decisionMsg({ ...d, signal: d.decision, analysis: d.reasoning }, false);
-                updateRing('DECIDE');
+                updateLog('ORCHESTRATOR SYNTHESIZING...');
                 break;
             case 'orchestrator_final':
                 html = decisionMsg(d, true);
-                updateRing('FINAL');
+                updateLog('FINAL TRADE DECISION GENERATED.');
                 activateStage('final');
                 break;
             case 'error':
                 html = sysMsg(d);
+                updateLog('PIPELINE ERROR ENCOUNTERED.', 'error');
                 statusDot.className = 'status-dot error';
                 statusText.textContent = 'Error';
                 break;
             case 'done':
                 html = sysMsg(d);
+                updateLog('PIPELINE EXECUTION [COMPLETE]', 'done');
                 statusDot.className = 'status-dot done';
                 statusText.textContent = 'Simulation complete';
                 completeTimeline();
@@ -454,3 +468,8 @@ function esc(s) {
 }
 
 runBtn.addEventListener('click', startAnalysis);
+
+const bigRunBtn = document.getElementById('bigRunBtn');
+if (bigRunBtn) {
+    bigRunBtn.addEventListener('click', startAnalysis);
+}

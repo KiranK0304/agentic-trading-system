@@ -17,15 +17,15 @@
     --green:    #50c878;
     --red:      #e06c75;
     --yellow:   #e5c07b;
-    --txt:      #b0c4b1;
-    --txt2:     #7a9a7e;
-    --txt3:     #4a6a4e;
+    --txt:      #c8e6c9;
+    --txt2:     #8ca890;
+    --txt3:     #5b8261;
     --font:     'Share Tech Mono', 'JetBrains Mono', 'Courier New', monospace;
     --mono:     'JetBrains Mono', 'Courier New', monospace;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html { font-size:14px; }
+html { font-size:16px; }
 body {
     font-family: var(--font);
     background: var(--bg);
@@ -85,17 +85,7 @@ body {
 
 /* ── Pipeline showcase + rotating border ── */
 .pipeline-showcase { position:relative; flex-shrink:0; }
-.pipeline-border-spin {
-    position:absolute; inset:-3px; border-radius:12px;
-    background: conic-gradient(from 0deg, transparent, var(--accent), var(--accent2), transparent);
-    animation: borderSpin 5s linear infinite;
-    z-index:-1; opacity:0.5;
-}
-.pipeline-border-spin::after {
-    content:''; position:absolute; inset:2px; border-radius:10px;
-    background: var(--bg);
-}
-@keyframes borderSpin { to { transform:rotate(360deg); } }
+/* Pipeline border spin removed */
 
 .pipeline-glow {
     position:absolute; inset:-30px; border-radius:20px;
@@ -238,31 +228,39 @@ body {
     100% { transform:scale(1.08) translate(8px,-8px); }
 }
 
-/* ── Ambient ring ── */
-.ambient-ring {
-    position:fixed; right:1.5rem; top:50%;
-    transform:translateY(-50%);
-    width:100px; height:100px;
-    display:flex; align-items:center; justify-content:center;
-    z-index:50; opacity:0.4;
-    transition: opacity 0.5s;
+/* ── Progress Panel (Right Col) ── */
+.progress-panel {
+    display:flex; flex-direction:column; height:100%;
+    padding:1.5rem 0 1.5rem 1rem;
 }
-.ambient-ring.active { opacity:0.9; }
-.ring-svg { width:100%; height:100%; }
-.ring-track { fill:none; stroke:rgba(80,200,120,0.06); stroke-width:2; }
-.ring-progress {
-    fill:none; stroke:var(--accent); stroke-width:2;
-    stroke-linecap:round;
-    stroke-dasharray: 565; stroke-dashoffset: 565;
-    transform-origin:center; transform:rotate(-90deg);
-    transition: stroke-dashoffset 1s var(--ease-out), stroke 0.4s;
-    filter: drop-shadow(0 0 6px var(--glow));
+.panel-header {
+    display:flex; align-items:center; gap:0.5rem;
+    margin-bottom:1rem; padding-bottom:0.5rem;
+    border-bottom:1px solid rgba(80,200,120,0.1);
 }
-.ring-label {
-    position:absolute;
-    font-family:var(--mono); font-size:0.5rem; font-weight:400;
-    color:var(--txt3); letter-spacing:0.15em;
+.pulse-indicator {
+    width:6px; height:6px; background:var(--accent); border-radius:1px;
+    animation:pulse 2s infinite;
 }
+.progress-panel h3 {
+    font-size:0.7rem; font-weight:400; letter-spacing:0.15em;
+    color:var(--accent); text-transform:uppercase; margin:0;
+}
+.log-stream {
+    flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:0.4rem;
+    padding-right:0.5rem;
+}
+.log-stream::-webkit-scrollbar { width:2px; }
+.log-stream::-webkit-scrollbar-thumb { background:rgba(80,200,120,0.15); border-radius:10px; }
+.log-entry {
+    font-size:0.65rem; color:var(--txt2); font-family:var(--mono);
+    line-height:1.5; opacity:0;
+    animation: msgIn 0.3s var(--ease-out) forwards;
+}
+.log-entry.active { color:var(--txt); font-weight:700; }
+.log-entry.done { color:var(--green); opacity:0.8; }
+.log-entry.error { color:var(--red); }
+.log-entry .timestamp-log { color:var(--txt3); margin-right:0.4rem; }
 
 /* ── Header ── */
 header {
@@ -302,8 +300,20 @@ h1 {
 main {
     flex:1; display:flex; flex-direction:column;
     overflow:hidden; position:relative;
-    max-width:920px; margin:0 auto; width:100%;
+    max-width:1400px; margin:0 auto; width:100%;
     z-index:10; padding:0 0.75rem;
+}
+
+/* ── 70/30 Layout ── */
+.dashboard-layout {
+    display:flex; flex:1; overflow:hidden;
+}
+.layout-left {
+    flex:0.72; display:flex; flex-direction:column; overflow:hidden;
+    border-right: 1px solid rgba(80,200,120,0.06);
+}
+.layout-right {
+    flex:0.28; display:flex; flex-direction:column; overflow:hidden;
 }
 
 /* ── Chat Feed ── */
@@ -319,12 +329,47 @@ main {
 .feed { display:flex; flex-direction:column; gap:0.5rem; }
 
 .feed-placeholder {
-    margin:auto; text-align:center; color:var(--txt3); padding:5rem 0;
+    margin:auto; text-align:center; color:var(--txt3); padding:4rem 0;
+    display:flex; flex-direction:column; align-items:center;
 }
-.placeholder-icon { margin-bottom:0.8rem; }
-.placeholder-icon svg { stroke: var(--txt3); }
-.feed-placeholder p { font-size:0.8rem; margin-bottom:0.25rem; }
-.feed-placeholder .sub { font-size:0.65rem; opacity:0.4; }
+
+/* ── Big Start Button ── */
+.big-run-btn {
+    display:flex; flex-direction:column; align-items:center; gap:0.8rem;
+    padding:2.2rem 3.5rem;
+    background: rgba(80,200,120,0.02);
+    border: 1px solid rgba(80,200,120,0.15);
+    border-radius: 4px;
+    cursor:pointer;
+    color:var(--accent);
+    transition:all 0.4s var(--ease-out);
+    position:relative; overflow:hidden;
+    animation: bigPulse 3s ease-in-out infinite;
+}
+@keyframes bigPulse {
+    0%,100% { box-shadow: 0 0 10px rgba(80,200,120,0.05); }
+    50%     { box-shadow: 0 0 25px rgba(80,200,120,0.15); border-color: rgba(80,200,120,0.25); }
+}
+.big-run-btn:hover {
+    background: rgba(80,200,120,0.06);
+    border-color: rgba(80,200,120,0.4);
+    box-shadow: 0 0 30px rgba(80,200,120,0.1);
+    transform:translateY(-2px);
+}
+.big-run-btn:active { transform:translateY(0); }
+.big-run-icon {
+    display:flex; justify-content:center; align-items:center;
+    width:64px; height:64px;
+    border-radius:50%;
+    background:rgba(80,200,120,0.08);
+    transition:transform 0.3s var(--ease-out);
+}
+.big-run-btn:hover .big-run-icon { transform:scale(1.1); background:rgba(80,200,120,0.15); }
+.big-run-text {
+    font-family:var(--font); font-size:1.1rem; letter-spacing:0.15em; font-weight:400;
+}
+
+.feed-placeholder p.sub { font-size:0.75rem; opacity:0.6; font-family:var(--mono); }
 
 
 /* ═══════════════════════════════════════════════════════════

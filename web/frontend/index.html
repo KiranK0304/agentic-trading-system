@@ -24,7 +24,6 @@
 
         <div class="landing-content">
             <div class="pipeline-showcase">
-                <div class="pipeline-border-spin"></div>
                 <div class="pipeline-glow"></div>
                 <img src="/static/pipeline.png" alt="Agent Pipeline Architecture" class="pipeline-img">
             </div>
@@ -74,14 +73,7 @@
         <!-- Ambient mesh behind chat -->
         <div class="dash-mesh"></div>
 
-        <!-- Ambient ring -->
-        <div class="ambient-ring" id="ambientRing">
-            <svg viewBox="0 0 200 200" class="ring-svg">
-                <circle cx="100" cy="100" r="90" class="ring-track"/>
-                <circle cx="100" cy="100" r="90" class="ring-progress" id="ringProgress"/>
-            </svg>
-            <div class="ring-label" id="ringLabel">IDLE</div>
-        </div>
+
 
         <header>
             <div class="header-left">
@@ -95,16 +87,31 @@
         </header>
 
         <main>
-            <div class="chat-container" id="chatContainer">
-                <div class="feed" id="feed">
-                    <div class="feed-placeholder" id="feedPlaceholder">
-                        <div class="placeholder-icon">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
-                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l3 3"/>
-                            </svg>
+            <div class="dashboard-layout">
+                <div class="layout-left">
+                    <div class="chat-container" id="chatContainer">
+                        <div class="feed" id="feed">
+                            <div class="feed-placeholder" id="feedPlaceholder">
+                                <button id="bigRunBtn" class="big-run-btn">
+                                    <div class="big-run-icon">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                                    </div>
+                                    <span class="big-run-text">START ANALYSIS</span>
+                                </button>
+                                <p class="sub" style="margin-top:1.2rem">Launch the multi-agent trading pipeline</p>
+                            </div>
                         </div>
-                        <p>Awaiting agent initialization</p>
-                        <p class="sub">Click Run to start the multi-agent pipeline</p>
+                    </div>
+                </div>
+                <div class="layout-right">
+                    <div class="progress-panel">
+                        <div class="panel-header">
+                            <div class="pulse-indicator"></div>
+                            <h3>SYSTEM ACTIVITY LOG</h3>
+                        </div>
+                        <div class="log-stream" id="logStream">
+                            <div class="log-entry sys-msg">AWAITING SIGNAL...</div>
+                        </div>
                     </div>
                 </div>
             </div>
