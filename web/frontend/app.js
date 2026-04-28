@@ -59,13 +59,13 @@ const ringLabel     = document.getElementById('ringLabel');
 (function typewriter() {
     const el = document.getElementById('typewriter');
     if (!el) return;
-    const text = 'AgenticTrade';
+    const text = 'QUANTAIRE -1';
     let i = 0;
     function type() {
         if (i <= text.length) {
-            // Color the "Trade" portion in accent green
-            const plain = text.substring(0, Math.min(i, 7));
-            const accent = i > 7 ? `<span style="color:var(--accent)">${text.substring(7, i)}</span>` : '';
+            // Color the "-1" portion in accent green
+            const plain = text.substring(0, Math.min(i, 10));
+            const accent = i > 10 ? `<span style="color:var(--accent)">${text.substring(10, i)}</span>` : '';
             el.innerHTML = plain + accent;
             i++;
             setTimeout(type, 100);

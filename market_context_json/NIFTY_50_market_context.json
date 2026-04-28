@@ -1,5 +1,5 @@
 {
-  "fetched_at_utc": "2026-04-25T07:46:11.319606+00:00",
+  "fetched_at_utc": "2026-04-26T13:14:05.107395+00:00",
   "indices": [
     {
       "name": "DAX",
@@ -15,23 +15,23 @@
     }
   ],
   "headlines": [
-    "US negotiators to go to Islamabad, but Iran says no direct talks",
-    "How the restaurant group behind NYC's Carbone is overcoming young people shunning alcohol",
-    "S&P 500, Nasdaq close at records on tech lift, Iran peace talk hopes",
-    "Tech boosts US stocks to record close, oil dips on signs of Iran peace progress",
-    "Iran to make offer aimed at satisfying US demands, Trump says",
-    "Special Forces Sgt. in Polymarket Maduro raid bet case released; Kalshi says it blocked him",
-    "US legal adviser says Iran war justified by Tehran's 'aggression' over decades",
-    "Witkoff and Kushner headed to Pakistan for Iran talks, White House says",
-    "SLB seeks to pass on costs as Iran war disrupts supply chains",
-    "We're raising our price target on chipmaker Arm after its blistering rally"
+    "Egypt economic outlook trimmed slightly due to Iran war: Reuters poll",
+    "Iran executes man linked to militant group, Tasnim reports",
+    "US-Iran peace hopes fade as Trump scraps talks",
+    "Iran talks, Jerome Powell and the White House Correspondents' Dinner",
+    "Trump says he canceled US negotiators' trip to Pakistan for Iran talks, Fox News reports",
+    "3 forces that drove another historic \u2013 yet volatile \u2013 week for the S&P 500",
+    "Turkey may consider role in Hormuz demining after Iran-US deal, minister says",
+    "Iran says it has hanged agent working for Israel over sabotage in protests - Tasnim",
+    "Trump cancels envoys' Pakistan trip, in blow to hopes for Iran war breakthrough",
+    "How the restaurant group behind NYC's Carbone is overcoming young people shunning alcohol"
   ],
   "fear_greed": {
-    "value": "31",
+    "value": "33",
     "classification": "Fear"
   },
   "derived": {
     "breadth": "indices_up=1, indices_down=1, indices_no_data=9",
-    "llm_context": "### Global market context\nIndices (available):\n  DAX: 45.0259 \u25b21.0342%\n  CAC 40: 49.68 \u25bc0.401%\nFear & Greed: 31/100 \u2014 Fear\nHeadlines:\n  - US negotiators to go to Islamabad, but Iran says no direct talks\n  - How the restaurant group behind NYC's Carbone is overcoming young people shunning alcohol\n  - S&P 500, Nasdaq close at records on tech lift, Iran peace talk hopes\n  - Tech boosts US stocks to record close, oil dips on signs of Iran peace progress\n  - Iran to make offer aimed at satisfying US demands, Trump says"
+    "llm_context": "### Global market context\nIndices (available):\n  DAX: 45.0259 \u25b21.0342%\n  CAC 40: 49.68 \u25bc0.401%\nFear & Greed: 33/100 \u2014 Fear\nHeadlines:\n  - Egypt economic outlook trimmed slightly due to Iran war: Reuters poll\n  - Iran executes man linked to militant group, Tasnim reports\n  - US-Iran peace hopes fade as Trump scraps talks\n  - Iran talks, Jerome Powell and the White House Correspondents' Dinner\n  - Trump says he canceled US negotiators' trip to Pakistan for Iran talks, Fox News reports"
   }
 }
