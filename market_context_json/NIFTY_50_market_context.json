@@ -1,37 +1,37 @@
 {
-  "fetched_at_utc": "2026-04-26T13:14:05.107395+00:00",
+  "fetched_at_utc": "2026-05-03T19:35:17.941212+00:00",
   "indices": [
     {
       "name": "DAX",
-      "price": 45.0259,
-      "change": 0.4609,
-      "percent_change": 1.0342
+      "price": 45.16,
+      "change": -0.09,
+      "percent_change": -0.1989
     },
     {
       "name": "CAC 40",
-      "price": 49.68,
-      "change": -0.2,
-      "percent_change": -0.401
+      "price": 48.85,
+      "change": 0.68,
+      "percent_change": 1.4117
     }
   ],
   "headlines": [
-    "Egypt economic outlook trimmed slightly due to Iran war: Reuters poll",
-    "Iran executes man linked to militant group, Tasnim reports",
-    "US-Iran peace hopes fade as Trump scraps talks",
-    "Iran talks, Jerome Powell and the White House Correspondents' Dinner",
-    "Trump says he canceled US negotiators' trip to Pakistan for Iran talks, Fox News reports",
-    "3 forces that drove another historic \u2013 yet volatile \u2013 week for the S&P 500",
-    "Turkey may consider role in Hormuz demining after Iran-US deal, minister says",
-    "Iran says it has hanged agent working for Israel over sabotage in protests - Tasnim",
-    "Trump cancels envoys' Pakistan trip, in blow to hopes for Iran war breakthrough",
-    "How the restaurant group behind NYC's Carbone is overcoming young people shunning alcohol"
+    "Big Tech earnings show how big, smart spending can be rewarded by the market",
+    "Hezbollah pays steep price in battle to reverse its fortunes",
+    "Nobel laureate Mohammadi remains in critical condition in Iran, foundation says",
+    "Healthcare cost surge makes generous parental paid leave benefits a target of workplace cuts",
+    "Gulf bourses close higher, but U.S.-Iran uncertainty caps upside",
+    "Fewer features, more value: Why some Americans are buying simpler cars",
+    "Slovakia's PM Fico to attend Victory Day parade in Moscow, Russian TV says",
+    "Iran executes man convicted over killing of security officer in 2022 unrest",
+    "Germany says US troop drawdown should spur Europe, but top Republicans worried",
+    "Trump says there is possibility US could restart strikes on Iran"
   ],
   "fear_greed": {
-    "value": "33",
-    "classification": "Fear"
+    "value": "47",
+    "classification": "Neutral"
   },
   "derived": {
     "breadth": "indices_up=1, indices_down=1, indices_no_data=9",
-    "llm_context": "### Global market context\nIndices (available):\n  DAX: 45.0259 \u25b21.0342%\n  CAC 40: 49.68 \u25bc0.401%\nFear & Greed: 33/100 \u2014 Fear\nHeadlines:\n  - Egypt economic outlook trimmed slightly due to Iran war: Reuters poll\n  - Iran executes man linked to militant group, Tasnim reports\n  - US-Iran peace hopes fade as Trump scraps talks\n  - Iran talks, Jerome Powell and the White House Correspondents' Dinner\n  - Trump says he canceled US negotiators' trip to Pakistan for Iran talks, Fox News reports"
+    "llm_context": "### Global market context\nIndices (available):\n  DAX: 45.16 \u25bc0.1989%\n  CAC 40: 48.85 \u25b21.4117%\nFear & Greed: 47/100 \u2014 Neutral\nHeadlines:\n  - Big Tech earnings show how big, smart spending can be rewarded by the market\n  - Hezbollah pays steep price in battle to reverse its fortunes\n  - Nobel laureate Mohammadi remains in critical condition in Iran, foundation says\n  - Healthcare cost surge makes generous parental paid leave benefits a target of workplace cuts\n  - Gulf bourses close higher, but U.S.-Iran uncertainty caps upside"
   }
 }

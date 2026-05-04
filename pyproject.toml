@@ -29,4 +29,5 @@ dependencies = [
     "nsepython>=2.97",
     "pip>=26.0.1",
     "setuptools>=82.0.1",
+    "watchfiles>=1.1.1",
 ]
