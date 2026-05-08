@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantaire -1 — Multi-Agent Trading Simulation</title>
-    <meta name="description" content="Real-time multi-agent trading analysis dashboard powered by LangGraph">
+    <title>Quantaire -1 — Live Trading Simulation</title>
+    <meta name="description" content="Real-time multi-agent virtual trading simulation dashboard powered by LangGraph">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
         <div class="landing-content">
             <div class="pipeline-showcase">
                 <div class="pipeline-glow"></div>
-                <img src="/static/pipeline.png" alt="Agent Pipeline Architecture" class="pipeline-img">
+                <img src="/static/pipeline.png?v=2" alt="Agent Pipeline Architecture" class="pipeline-img">
             </div>
 
             <div class="landing-text">
@@ -33,11 +33,11 @@
                     <span class="typewriter" id="typewriter"></span>
                     <span class="cursor">|</span>
                 </h1>
-                <p class="landing-tagline cascade" style="--i:1">Multi-Agent Trading Simulation</p>
+                <p class="landing-tagline cascade" style="--i:1">Live Virtual Trading Simulation</p>
                 <div class="landing-divider cascade" style="--i:2"></div>
                 <p class="landing-desc cascade" style="--i:3">
                     A system of specialized LLM agents collaborating in real-time to analyze NIFTY 50 Futures — 
-                    from technical patterns to macro context to risk evaluation — before arriving at a consensus trade decision.
+                    from technical patterns to macro context to risk evaluation — executing virtual trades every 30 minutes.
                 </p>
                 <p class="landing-credit cascade" style="--i:4">Developed by <strong>Kiran</strong></p>
                 <button id="enterBtn" class="enter-btn cascade" style="--i:5">
@@ -54,14 +54,14 @@
             <div class="ticker-track">
                 <span>◆ 5 AGENTS ONLINE</span>
                 <span>◆ NIFTY 50 FUTURES</span>
-                <span>◆ LIVE ANALYSIS</span>
-                <span>◆ OPENROUTER LLM</span>
+                <span>◆ LIVE SIMULATION</span>
+                <span>◆ VIRTUAL TRADING</span>
                 <span>◆ LANGGRAPH PIPELINE</span>
                 <span>◆ RISK MANAGEMENT</span>
                 <span>◆ 5 AGENTS ONLINE</span>
                 <span>◆ NIFTY 50 FUTURES</span>
-                <span>◆ LIVE ANALYSIS</span>
-                <span>◆ OPENROUTER LLM</span>
+                <span>◆ LIVE SIMULATION</span>
+                <span>◆ VIRTUAL TRADING</span>
                 <span>◆ LANGGRAPH PIPELINE</span>
                 <span>◆ RISK MANAGEMENT</span>
             </div>
@@ -70,15 +70,17 @@
 
     <!-- ── Main Dashboard ──────────────────────────── -->
     <div id="mainDashboard" class="main-dashboard hidden">
-        <!-- Ambient mesh behind chat -->
+        <!-- Ambient mesh behind dashboard -->
         <div class="dash-mesh"></div>
-
-
 
         <header>
             <div class="header-left">
                 <div class="logo-pulse"></div>
                 <h1>QUANTAIRE <span class="accent">-1</span></h1>
+                <div class="live-badge">
+                    <div class="live-dot"></div>
+                    <span>LIVE</span>
+                </div>
             </div>
             <div class="header-right">
                 <span class="asset-badge">NIFTY 50 FUTURES</span>
@@ -87,35 +89,124 @@
         </header>
 
         <main>
+            <!-- ── Countdown Timers ──────────────────── -->
+            <div class="countdown-bar">
+                <div class="countdown-card" id="agentCountdown">
+                    <div class="countdown-ring-wrap">
+                        <svg class="countdown-ring" viewBox="0 0 40 40">
+                            <circle class="ring-bg" cx="20" cy="20" r="17"/>
+                            <circle class="ring-progress" id="agentRingProgress" cx="20" cy="20" r="17"/>
+                        </svg>
+                        <div class="ring-icon">🤖</div>
+                    </div>
+                    <div class="countdown-info">
+                        <span class="countdown-label">NEXT AGENT RUN</span>
+                        <span class="countdown-time" id="agentTimer">--:--</span>
+                    </div>
+                </div>
+
+                <div class="countdown-card" id="pnlCountdown">
+                    <div class="countdown-ring-wrap">
+                        <svg class="countdown-ring" viewBox="0 0 40 40">
+                            <circle class="ring-bg" cx="20" cy="20" r="17"/>
+                            <circle class="ring-progress" id="pnlRingProgress" cx="20" cy="20" r="17"/>
+                        </svg>
+                        <div class="ring-icon">📊</div>
+                    </div>
+                    <div class="countdown-info">
+                        <span class="countdown-label">NEXT P&L UPDATE</span>
+                        <span class="countdown-time" id="pnlTimer">--:--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Portfolio Metrics Panel ────────────── -->
+            <div class="portfolio-panel" id="portfolioPanel">
+                <div class="metric-card">
+                    <span class="metric-label">POSITION</span>
+                    <span class="metric-value" id="metricPosition">NEUTRAL</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">ENTRY PRICE</span>
+                    <span class="metric-value" id="metricEntry">—</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">CURRENT PRICE</span>
+                    <span class="metric-value" id="metricCurrent">—</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">UNREALIZED P&L</span>
+                    <span class="metric-value pnl" id="metricUnrealized">₹0.00</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">REALIZED P&L</span>
+                    <span class="metric-value pnl" id="metricRealized">₹0.00</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">CAPITAL</span>
+                    <span class="metric-value" id="metricCapital">₹10,00,000</span>
+                </div>
+                <div class="metric-card highlight">
+                    <span class="metric-label">TOTAL VALUE</span>
+                    <span class="metric-value" id="metricTotal">₹10,00,000</span>
+                </div>
+            </div>
+
+            <!-- ── Main Content Area ─────────────────── -->
             <div class="dashboard-layout">
                 <div class="layout-left">
+                    <div class="panel-header">
+                        <div class="pulse-indicator"></div>
+                        <h3>LAST AGENT DECISION</h3>
+                    </div>
                     <div class="chat-container" id="chatContainer">
                         <div class="feed" id="feed">
                             <div class="feed-placeholder" id="feedPlaceholder">
-                                <button id="bigRunBtn" class="big-run-btn">
-                                    <div class="big-run-icon">
-                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                                <div class="waiting-animation">
+                                    <div class="waiting-dots">
+                                        <span></span><span></span><span></span>
                                     </div>
-                                    <span class="big-run-text">START ANALYSIS</span>
-                                </button>
-                                <p class="sub" style="margin-top:1.2rem">Launch the multi-agent trading pipeline</p>
+                                </div>
+                                <p class="waiting-text">Waiting for first agent run...</p>
+                                <p class="sub">The agent pipeline runs every 30 minutes automatically</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="layout-right">
                     <div class="progress-panel">
                         <div class="panel-header">
                             <div class="pulse-indicator"></div>
+                            <h3>TRADE HISTORY</h3>
+                        </div>
+                        <div class="trade-history-wrap" id="tradeHistoryWrap">
+                            <div class="trade-empty" id="tradeEmpty">No trades yet</div>
+                            <table class="trade-table hidden" id="tradeTable">
+                                <thead>
+                                    <tr>
+                                        <th>DIR</th>
+                                        <th>ENTRY</th>
+                                        <th>EXIT</th>
+                                        <th>P&L</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tradeTableBody"></tbody>
+                            </table>
+                        </div>
+
+                        <div class="panel-header" style="margin-top:1rem;">
+                            <div class="pulse-indicator"></div>
                             <h3>SYSTEM ACTIVITY LOG</h3>
                         </div>
                         <div class="log-stream" id="logStream">
-                            <div class="log-entry sys-msg">AWAITING SIGNAL...</div>
+                            <div class="log-entry sys-msg active">SIMULATION ACTIVE...</div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- ── Bottom Status Bar ─────────────────── -->
             <div class="controls-bar">
                 <!-- Timeline dots -->
                 <div class="timeline" id="timeline">
@@ -133,16 +224,9 @@
                 </div>
 
                 <div class="controls-row">
-                    <button id="runBtn" class="run-btn">
-                        <div class="ripple-container"></div>
-                        <div class="run-icon">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-                        </div>
-                        <span class="btn-text">Run Analysis</span>
-                    </button>
                     <div class="status-bar">
-                        <div class="status-dot" id="statusDot"></div>
-                        <span class="status-text" id="statusText">Ready</span>
+                        <div class="status-dot running" id="statusDot"></div>
+                        <span class="status-text" id="statusText">SIMULATION ACTIVE</span>
                     </div>
                 </div>
             </div>

@@ -1,37 +1,37 @@
 {
-  "fetched_at_utc": "2026-05-03T19:35:17.941212+00:00",
+  "fetched_at_utc": "2026-05-08T08:15:10.137646+00:00",
   "indices": [
     {
       "name": "DAX",
-      "price": 45.16,
-      "change": -0.09,
-      "percent_change": -0.1989
+      "price": 45.5038,
+      "change": -0.9562,
+      "percent_change": -2.0581
     },
     {
       "name": "CAC 40",
-      "price": 48.85,
-      "change": 0.68,
-      "percent_change": 1.4117
+      "price": 48.62,
+      "change": -0.49,
+      "percent_change": -0.9978
     }
   ],
   "headlines": [
-    "Big Tech earnings show how big, smart spending can be rewarded by the market",
-    "Hezbollah pays steep price in battle to reverse its fortunes",
-    "Nobel laureate Mohammadi remains in critical condition in Iran, foundation says",
-    "Healthcare cost surge makes generous parental paid leave benefits a target of workplace cuts",
-    "Gulf bourses close higher, but U.S.-Iran uncertainty caps upside",
-    "Fewer features, more value: Why some Americans are buying simpler cars",
-    "Slovakia's PM Fico to attend Victory Day parade in Moscow, Russian TV says",
-    "Iran executes man convicted over killing of security officer in 2022 unrest",
-    "Germany says US troop drawdown should spur Europe, but top Republicans worried",
-    "Trump says there is possibility US could restart strikes on Iran"
+    "Dollar steady as US-Iran hostilities flare, yen steadied by intervention risk",
+    "Toyota halves quarterly profit as Iran crisis hits",
+    "Southeast Asian leaders seek strategy to ease impacts of Iran war",
+    "Trump says ceasefire still holds after fighting between the US and Iran flares",
+    "Indian shares decline on oil spike as US-Iran attacks dent peace hopes",
+    "Gold set for weekly gain as markets focus on US-Iran deal prospects",
+    "Oil prices gain on renewed US-Iran hostilities",
+    "US military says it carries out retaliatory strikes against Iran",
+    "Iran accuses US of violating ceasefire with new attacks",
+    "US navy came under missile fire after US attack on Iranian oil tanker, Iran state media says"
   ],
   "fear_greed": {
-    "value": "47",
-    "classification": "Neutral"
+    "value": "38",
+    "classification": "Fear"
   },
   "derived": {
-    "breadth": "indices_up=1, indices_down=1, indices_no_data=9",
-    "llm_context": "### Global market context\nIndices (available):\n  DAX: 45.16 \u25bc0.1989%\n  CAC 40: 48.85 \u25b21.4117%\nFear & Greed: 47/100 \u2014 Neutral\nHeadlines:\n  - Big Tech earnings show how big, smart spending can be rewarded by the market\n  - Hezbollah pays steep price in battle to reverse its fortunes\n  - Nobel laureate Mohammadi remains in critical condition in Iran, foundation says\n  - Healthcare cost surge makes generous parental paid leave benefits a target of workplace cuts\n  - Gulf bourses close higher, but U.S.-Iran uncertainty caps upside"
+    "breadth": "indices_up=0, indices_down=2, indices_no_data=9",
+    "llm_context": "### Global market context\nIndices (available):\n  DAX: 45.5038 \u25bc2.0581%\n  CAC 40: 48.62 \u25bc0.9978%\nFear & Greed: 38/100 \u2014 Fear\nHeadlines:\n  - Dollar steady as US-Iran hostilities flare, yen steadied by intervention risk\n  - Toyota halves quarterly profit as Iran crisis hits\n  - Southeast Asian leaders seek strategy to ease impacts of Iran war\n  - Trump says ceasefire still holds after fighting between the US and Iran flares\n  - Indian shares decline on oil spike as US-Iran attacks dent peace hopes"
   }
 }
